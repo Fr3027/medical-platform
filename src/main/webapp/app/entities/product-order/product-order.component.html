@@ -1,0 +1,75 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="demoApp.productOrder.home.title">Product Orders</span>
+
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-product-order" [routerLink]="['/product-order/new']">
+            <fa-icon icon="plus"></fa-icon>
+            <span  jhiTranslate="demoApp.productOrder.home.createLabel">
+            Create a new Product Order
+            </span>
+        </button>
+    </h2>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="productOrders?.length === 0">
+        <span jhiTranslate="demoApp.productOrder.home.notFound">No productOrders found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="productOrders && productOrders.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+                <tr>
+                    <th scope="col" ><span jhiTranslate="global.field.id">ID</span></th>
+                    <th scope="col" ><span jhiTranslate="demoApp.productOrder.quantity">Quantity</span></th>
+                    <th scope="col" ><span jhiTranslate="demoApp.productOrder.totalPrice">Total Price</span></th>
+                    <th scope="col" ><span jhiTranslate="demoApp.productOrder.product">Product</span></th>
+                    <th scope="col" ><span jhiTranslate="demoApp.productOrder.cart">Cart</span></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let productOrder of productOrders ;trackBy: trackId">
+                    <td><a [routerLink]="['/product-order', productOrder.id, 'view']">{{ productOrder.id }}</a></td>
+                    <td>{{ productOrder.quantity }}</td>
+                    <td>{{ productOrder.totalPrice }}</td>
+                    <td>
+                        <div *ngIf="productOrder.product">
+                            <a [routerLink]="['/product', productOrder.product?.id, 'view']" >{{ productOrder.product?.name }}</a>
+                        </div>
+                    </td>
+                    <td>
+                        <div *ngIf="productOrder.cart">
+                            <a [routerLink]="['/shopping-cart', productOrder.cart?.id, 'view']" >{{ productOrder.cart?.id }}</a>
+                        </div>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit"
+                                    [routerLink]="['/product-order', productOrder.id, 'view']"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="eye"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                            </button>
+
+                            <button type="submit"
+                                    [routerLink]="['/product-order', productOrder.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon icon="pencil-alt"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                            </button>
+
+                            <button type="submit" (click)="delete(productOrder)"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon icon="times"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

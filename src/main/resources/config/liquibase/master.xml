@@ -14,7 +14,18 @@
     <property name="uuidType" value="varchar(36)" dbms="h2, mysql, mariadb"/>
 
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210324105254_added_entity_Product.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210324105354_added_entity_ProductCategory.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210324105454_added_entity_CustomerDetails.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210324105554_added_entity_ShoppingCart.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210324105654_added_entity_ProductOrder.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210324105754_added_entity_Advisory.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
+    <include file="config/liquibase/changelog/20210324105254_added_entity_constraints_Product.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210324105454_added_entity_constraints_CustomerDetails.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210324105554_added_entity_constraints_ShoppingCart.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210324105654_added_entity_constraints_ProductOrder.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210324105754_added_entity_constraints_Advisory.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
 </databaseChangeLog>

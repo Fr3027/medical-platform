@@ -1,0 +1,29 @@
+{
+  "demoApp": {
+    "advisory": {
+      "home": {
+        "title": "Advisories",
+        "createLabel": "Create a new Advisory",
+        "createOrEditLabel": "Create or edit a Advisory",
+        "notFound": "No Advisories found"
+      },
+      "created": "A new Advisory is created with identifier {{ param }}",
+      "updated": "A Advisory is updated with identifier {{ param }}",
+      "deleted": "A Advisory is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Advisory {{ id }}?"
+      },
+      "detail": {
+        "title": "Advisory"
+      },
+      "created": "Created",
+      "updated": "Updated",
+      "title": "Title",
+      "detail": "Detail",
+      "answer": "Answer",
+      "initiator": "Initiator",
+      "proposer": "Proposer",
+      "user": "User"
+    }
+  }
+}

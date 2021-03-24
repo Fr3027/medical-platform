@@ -1,0 +1,49 @@
+{
+  "name": "ShoppingCart",
+  "fields": [
+    {
+      "fieldName": "placedDate",
+      "fieldType": "Instant",
+      "fieldValidateRules": [
+        "required"
+      ]
+    },
+    {
+      "fieldName": "totalPrice",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": [
+        "required",
+        "min"
+      ],
+      "fieldValidateRulesMin": "0"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "productOrder",
+      "otherEntityRelationshipName": "cart",
+      "relationshipName": "order"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "customerDetails",
+      "otherEntityRelationshipName": "cart",
+      "relationshipValidateRules": "required",
+      "relationshipName": "customerDetails",
+      "otherEntityField": "id"
+    }
+  ],
+  "changelogDate": "20210324105554",
+  "javadoc": "Shopping cart to hold users orders",
+  "entityTableName": "shopping_cart",
+  "dto": "no",
+  "pagination": "no",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

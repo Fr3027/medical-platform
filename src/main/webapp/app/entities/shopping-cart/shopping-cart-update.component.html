@@ -1,0 +1,77 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-shopping-cart-heading" jhiTranslate="demoApp.shoppingCart.home.createOrEditLabel">Create or edit a Shopping Cart</h2>
+
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+
+                <div class="form-group" [hidden]="!editForm.get('id')!.value">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="demoApp.shoppingCart.placedDate" for="field_placedDate">Placed Date</label>
+                    <div class="d-flex">
+                        <input id="field_placedDate" type="datetime-local" class="form-control" name="placedDate" formControlName="placedDate" placeholder="YYYY-MM-DD HH:mm"/>
+                    </div>
+                    <div *ngIf="editForm.get('placedDate')!.invalid && (editForm.get('placedDate')!.dirty || editForm.get('placedDate')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('placedDate')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('placedDate')?.errors?.ZonedDateTimelocal" jhiTranslate="entity.validation.ZonedDateTimelocal">
+                            This field should be a date and time.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="demoApp.shoppingCart.totalPrice" for="field_totalPrice">Total Price</label>
+                    <input type="number" class="form-control" name="totalPrice" id="field_totalPrice"
+                           formControlName="totalPrice"/>
+                    <div *ngIf="editForm.get('totalPrice')!.invalid && (editForm.get('totalPrice')!.dirty || editForm.get('totalPrice')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('totalPrice')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('totalPrice')?.errors?.min" jhiTranslate="entity.validation.min" [translateValues]="{ min: 0 }">
+                            This field should be at least 0.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('totalPrice')?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="demoApp.shoppingCart.customerDetails" for="field_customerDetails">Customer Details</label>
+                    <select class="form-control" id="field_customerDetails" name="customerDetails" formControlName="customerDetails">
+                        <option *ngIf="!editForm.get('customerDetails')!.value" [ngValue]="null" selected></option>
+                        <option [ngValue]="customerDetailsOption.id === editForm.get('customerDetails')!.value?.id ? editForm.get('customerDetails')!.value : customerDetailsOption" *ngFor="let customerDetailsOption of customerdetails; trackBy: trackById">{{ customerDetailsOption.id }}</option>
+                    </select>
+                </div>
+                <div *ngIf="editForm.get('customerDetails')!.invalid && (editForm.get('customerDetails')!.dirty || editForm.get('customerDetails')!.touched)">
+                    <small class="form-text text-danger"
+                           *ngIf="editForm.get('customerDetails')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
+                </div>
+            </div>
+
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

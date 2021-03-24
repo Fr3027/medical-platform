@@ -1,0 +1,25 @@
+{
+  "demoApp": {
+    "shoppingCart": {
+      "home": {
+        "title": "Shopping Carts",
+        "createLabel": "创建新 Shopping Cart",
+        "createOrEditLabel": "创建或编辑 Shopping Cart",
+        "notFound": "No Shopping Carts found"
+      },
+      "created": "Shopping Cart {{ param }} 创建成功",
+      "updated": "Shopping Cart {{ param }} 更新成功",
+      "deleted": "Shopping Cart {{ param }} 删除成功",
+      "delete": {
+        "question": "你确定要删除 Shopping Cart {{ id }} 吗？"
+      },
+      "detail": {
+        "title": "Shopping Cart"
+      },
+      "placedDate": "Placed Date",
+      "totalPrice": "Total Price",
+      "order": "Order",
+      "customerDetails": "Customer Details"
+    }
+  }
+}

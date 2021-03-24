@@ -1,0 +1,29 @@
+{
+  "demoApp": {
+    "advisory": {
+      "home": {
+        "title": "Advisories",
+        "createLabel": "创建新 Advisory",
+        "createOrEditLabel": "创建或编辑 Advisory",
+        "notFound": "No Advisories found"
+      },
+      "created": "Advisory {{ param }} 创建成功",
+      "updated": "Advisory {{ param }} 更新成功",
+      "deleted": "Advisory {{ param }} 删除成功",
+      "delete": {
+        "question": "你确定要删除 Advisory {{ id }} 吗？"
+      },
+      "detail": {
+        "title": "Advisory"
+      },
+      "created": "Created",
+      "updated": "Updated",
+      "title": "Title",
+      "detail": "Detail",
+      "answer": "Answer",
+      "initiator": "Initiator",
+      "proposer": "Proposer",
+      "user": "User"
+    }
+  }
+}

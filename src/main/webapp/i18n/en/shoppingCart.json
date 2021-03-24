@@ -1,0 +1,25 @@
+{
+  "demoApp": {
+    "shoppingCart": {
+      "home": {
+        "title": "Shopping Carts",
+        "createLabel": "Create a new Shopping Cart",
+        "createOrEditLabel": "Create or edit a Shopping Cart",
+        "notFound": "No Shopping Carts found"
+      },
+      "created": "A new Shopping Cart is created with identifier {{ param }}",
+      "updated": "A Shopping Cart is updated with identifier {{ param }}",
+      "deleted": "A Shopping Cart is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Shopping Cart {{ id }}?"
+      },
+      "detail": {
+        "title": "Shopping Cart"
+      },
+      "placedDate": "Placed Date",
+      "totalPrice": "Total Price",
+      "order": "Order",
+      "customerDetails": "Customer Details"
+    }
+  }
+}
