@@ -31,6 +31,7 @@
   },
   "defaultProject": "demo",
   "cli": {
-    "packageManager": "npm"
+    "packageManager": "npm",
+    "analytics": "a5cacae2-aef3-4eab-bd53-53122bb7460b"
   }
 }
