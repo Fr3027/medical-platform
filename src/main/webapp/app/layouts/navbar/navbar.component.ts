@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { JhiLanguageService } from 'ng-jhipster';
 import { SessionStorageService } from 'ngx-webstorage';
-
+import { Account } from 'app/core/user/account.model';
 import { VERSION } from 'app/app.constants';
 import { LANGUAGES } from 'app/core/language/language.constants';
 import { AccountService } from 'app/core/auth/account.service';
@@ -21,6 +21,7 @@ export class NavbarComponent implements OnInit {
   languages = LANGUAGES;
   swaggerEnabled?: boolean;
   version: string;
+  account!: Account;
 
   constructor(
     private loginService: LoginService,
@@ -38,6 +39,12 @@ export class NavbarComponent implements OnInit {
     this.profileService.getProfileInfo().subscribe(profileInfo => {
       this.inProduction = profileInfo.inProduction;
       this.swaggerEnabled = profileInfo.swaggerEnabled;
+    });
+    // get account
+    this.accountService.identity().subscribe(account => {
+      if (account) {
+        this.account = account;
+      }
     });
   }
 
