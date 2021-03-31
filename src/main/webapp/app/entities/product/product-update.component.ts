@@ -9,8 +9,12 @@ import { JhiDataUtils, JhiFileLoadError, JhiEventManager, JhiEventWithContent } 
 import { IProduct, Product } from 'app/shared/model/product.model';
 import { ProductService } from './product.service';
 import { AlertError } from 'app/shared/alert/alert-error.model';
+import { IUser } from 'app/core/user/user.model';
+import { UserService } from 'app/core/user/user.service';
 import { IProductCategory } from 'app/shared/model/product-category.model';
 import { ProductCategoryService } from 'app/entities/product-category/product-category.service';
+
+type SelectableEntity = IUser | IProductCategory;
 
 @Component({
   selector: 'jhi-product-update',
@@ -18,6 +22,7 @@ import { ProductCategoryService } from 'app/entities/product-category/product-ca
 })
 export class ProductUpdateComponent implements OnInit {
   isSaving = false;
+  users: IUser[] = [];
   productcategories: IProductCategory[] = [];
 
   editForm = this.fb.group({
@@ -33,6 +38,7 @@ export class ProductUpdateComponent implements OnInit {
     validPeriod: [null, [Validators.required]],
     image: [null, [Validators.required]],
     imageContentType: [],
+    user: [],
     productCategory: [null, Validators.required],
   });
 
@@ -40,6 +46,7 @@ export class ProductUpdateComponent implements OnInit {
     protected dataUtils: JhiDataUtils,
     protected eventManager: JhiEventManager,
     protected productService: ProductService,
+    protected userService: UserService,
     protected productCategoryService: ProductCategoryService,
     protected elementRef: ElementRef,
     protected activatedRoute: ActivatedRoute,
@@ -49,6 +56,8 @@ export class ProductUpdateComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ product }) => {
       this.updateForm(product);
+
+      this.userService.query().subscribe((res: HttpResponse<IUser[]>) => (this.users = res.body || []));
 
       this.productCategoryService.query().subscribe((res: HttpResponse<IProductCategory[]>) => (this.productcategories = res.body || []));
     });
@@ -68,6 +77,7 @@ export class ProductUpdateComponent implements OnInit {
       validPeriod: product.validPeriod,
       image: product.image,
       imageContentType: product.imageContentType,
+      user: product.user,
       productCategory: product.productCategory,
     });
   }
@@ -127,6 +137,7 @@ export class ProductUpdateComponent implements OnInit {
       validPeriod: this.editForm.get(['validPeriod'])!.value,
       imageContentType: this.editForm.get(['imageContentType'])!.value,
       image: this.editForm.get(['image'])!.value,
+      user: this.editForm.get(['user'])!.value,
       productCategory: this.editForm.get(['productCategory'])!.value,
     };
   }
@@ -147,7 +158,7 @@ export class ProductUpdateComponent implements OnInit {
     this.isSaving = false;
   }
 
-  trackById(index: number, item: IProductCategory): any {
+  trackById(index: number, item: SelectableEntity): any {
     return item.id;
   }
 }

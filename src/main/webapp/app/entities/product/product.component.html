@@ -33,6 +33,7 @@
                     <th scope="col"  jhiSortBy="type"><span jhiTranslate="demoApp.product.type">Type</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="validPeriod"><span jhiTranslate="demoApp.product.validPeriod">Valid Period</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="image"><span jhiTranslate="demoApp.product.image">Image</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="user.login"><span jhiTranslate="demoApp.product.user">User</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="productCategory.name"><span jhiTranslate="demoApp.product.productCategory">Product Category</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"></th>
                 </tr>
@@ -54,6 +55,9 @@
                             <img [src]="'data:' + product.imageContentType + ';base64,' + product.image" style="max-height: 30px;" alt="product image"/>
                         </a>
                         <span *ngIf="product.image">{{ product.imageContentType }}, {{ byteSize(product.image) }}</span>
+                    </td>
+                    <td>
+                        {{ product.user?.login }}
                     </td>
                     <td>
                         <div *ngIf="product.productCategory">

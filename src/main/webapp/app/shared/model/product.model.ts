@@ -1,3 +1,4 @@
+import { IUser } from 'app/core/user/user.model';
 import { IProductCategory } from 'app/shared/model/product-category.model';
 
 export interface IProduct {
@@ -13,6 +14,7 @@ export interface IProduct {
   validPeriod?: string;
   imageContentType?: string;
   image?: any;
+  user?: IUser;
   productCategory?: IProductCategory;
 }
 
@@ -30,6 +32,7 @@ export class Product implements IProduct {
     public validPeriod?: string,
     public imageContentType?: string,
     public image?: any,
+    public user?: IUser,
     public productCategory?: IProductCategory
   ) {}
 }

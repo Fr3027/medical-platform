@@ -68,6 +68,10 @@ public class Product implements Serializable {
     @Column(name = "image_content_type", nullable = false)
     private String imageContentType;
 
+    @ManyToOne
+    @JsonIgnoreProperties(value = "products", allowSetters = true)
+    private User user;
+
     @ManyToOne(optional = false)
     @NotNull
     @JsonIgnoreProperties(value = "products", allowSetters = true)
@@ -223,6 +227,19 @@ public class Product implements Serializable {
 
     public void setImageContentType(String imageContentType) {
         this.imageContentType = imageContentType;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public Product user(User user) {
+        this.user = user;
+        return this;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public ProductCategory getProductCategory() {

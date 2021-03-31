@@ -26,6 +26,7 @@
       "type": "Type",
       "validPeriod": "Valid Period",
       "image": "Image",
+      "user": "User",
       "productCategory": "Product Category"
     }
   }

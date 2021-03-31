@@ -78,6 +78,13 @@
   "relationships": [
     {
       "relationshipType": "many-to-one",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "product",
+      "relationshipName": "user",
+      "otherEntityField": "login"
+    },
+    {
+      "relationshipType": "many-to-one",
       "otherEntityName": "productCategory",
       "otherEntityRelationshipName": "product",
       "relationshipValidateRules": "required",
