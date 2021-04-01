@@ -164,7 +164,7 @@
                         </a>
                     </li>
                     <li *ngSwitchCase="true">
-                        <a class="dropdown-item" [routerLink]="['/account/customer-details',account.id]" routerLinkActive="active" (click)="collapseNavbar()">
+                        <a *ngIf="account$ | async as account" class="dropdown-item" [routerLink]="['/account/customer-details',account.id]" routerLinkActive="active" (click)="collapseNavbar()">
                             <fa-icon icon="lock" [fixedWidth]="true"></fa-icon>
                             <span jhiTranslate="global.menu.account.password">Password</span>
                         </a>
