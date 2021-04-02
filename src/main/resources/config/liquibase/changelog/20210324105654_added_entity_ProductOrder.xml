@@ -19,17 +19,27 @@
             <column name="quantity" type="integer">
                 <constraints nullable="false" />
             </column>
-            <column name="total_price" type="decimal(21,2)">
+            <column name="total_price" type="integer">
+                <constraints nullable="false" />
+            </column>
+            <column name="created" type="datetime">
+                <constraints nullable="false" />
+            </column>
+            <column name="address" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="status" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
             <column name="product_id" type="bigint">
                 <constraints nullable="false" />
             </column>
-            <column name="cart_id" type="bigint">
+            <column name="user_id" type="bigint">
                 <constraints nullable="false" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
+        <dropDefaultValue tableName="product_order" columnName="created" columnDataType="datetime"/>
     </changeSet>
 
     <changeSet id="20210324105654-1-relations" author="jhipster">
@@ -53,8 +63,11 @@
             <column name="id" type="numeric"/>
             <column name="quantity" type="numeric"/>
             <column name="total_price" type="numeric"/>
+            <column name="created" type="datetime"/>
+            <column name="address" type="string"/>
+            <column name="status" type="string"/>
             <column name="product_id" type="numeric"/>
-            <column name="cart_id" type="numeric"/>
+            <column name="user_id" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

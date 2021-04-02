@@ -12,12 +12,34 @@
     },
     {
       "fieldName": "totalPrice",
-      "fieldType": "BigDecimal",
+      "fieldType": "Integer",
       "fieldValidateRules": [
         "required",
         "min"
       ],
       "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "created",
+      "fieldType": "ZonedDateTime",
+      "fieldValidateRules": [
+        "required"
+      ]
+    },
+    {
+      "fieldName": "address",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "required"
+      ]
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "STATUS",
+      "fieldValues": "NEW,CANCEL,COMPLETED",
+      "fieldValidateRules": [
+        "required"
+      ]
     }
   ],
   "relationships": [
@@ -27,14 +49,14 @@
       "otherEntityRelationshipName": "productOrder",
       "relationshipValidateRules": "required",
       "relationshipName": "product",
-      "otherEntityField": "name"
+      "otherEntityField": "id"
     },
     {
       "relationshipType": "many-to-one",
-      "otherEntityName": "shoppingCart",
-      "otherEntityRelationshipName": "order",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "productOrder",
       "relationshipValidateRules": "required",
-      "relationshipName": "cart",
+      "relationshipName": "user",
       "otherEntityField": "id"
     }
   ],

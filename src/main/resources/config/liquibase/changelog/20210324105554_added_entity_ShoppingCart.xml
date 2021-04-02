@@ -16,18 +16,8 @@
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="placed_date" type="datetime">
-                <constraints nullable="false" />
-            </column>
-            <column name="total_price" type="decimal(21,2)">
-                <constraints nullable="false" />
-            </column>
-            <column name="customer_details_id" type="bigint">
-                <constraints nullable="false" />
-            </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
-        <dropDefaultValue tableName="shopping_cart" columnName="placed_date" columnDataType="datetime"/>
     </changeSet>
 
     <changeSet id="20210324105554-1-relations" author="jhipster">
@@ -49,9 +39,6 @@
                   separator=";"
                   tableName="shopping_cart">
             <column name="id" type="numeric"/>
-            <column name="placed_date" type="datetime"/>
-            <column name="total_price" type="numeric"/>
-            <column name="customer_details_id" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

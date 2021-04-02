@@ -1,0 +1,75 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="demoApp.cartItem.home.title">Cart Items</span>
+
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-cart-item" [routerLink]="['/cart-item/new']">
+            <fa-icon icon="plus"></fa-icon>
+            <span  jhiTranslate="demoApp.cartItem.home.createLabel">
+            Create a new Cart Item
+            </span>
+        </button>
+    </h2>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="cartItems?.length === 0">
+        <span jhiTranslate="demoApp.cartItem.home.notFound">No cartItems found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="cartItems && cartItems.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+                <tr>
+                    <th scope="col" ><span jhiTranslate="global.field.id">ID</span></th>
+                    <th scope="col" ><span jhiTranslate="demoApp.cartItem.quantity">Quantity</span></th>
+                    <th scope="col" ><span jhiTranslate="demoApp.cartItem.placeDate">Place Date</span></th>
+                    <th scope="col" ><span jhiTranslate="demoApp.cartItem.product">Product</span></th>
+                    <th scope="col" ><span jhiTranslate="demoApp.cartItem.cart">Cart</span></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let cartItem of cartItems ;trackBy: trackId">
+                    <td><a [routerLink]="['/cart-item', cartItem.id, 'view']">{{ cartItem.id }}</a></td>
+                    <td>{{ cartItem.quantity }}</td>
+                    <td>{{ cartItem.placeDate | date:'medium' }}</td>
+                    <td>
+                        <div *ngIf="cartItem.product">
+                            <a [routerLink]="['/product', cartItem.product?.id, 'view']" >{{ cartItem.product?.id }}</a>
+                        </div>
+                    </td>
+                    <td>
+                        <div *ngIf="cartItem.cart">
+                            <a [routerLink]="['/shopping-cart', cartItem.cart?.id, 'view']" >{{ cartItem.cart?.id }}</a>
+                        </div>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit"
+                                    [routerLink]="['/cart-item', cartItem.id, 'view']"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="eye"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                            </button>
+
+                            <button type="submit"
+                                    [routerLink]="['/cart-item', cartItem.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon icon="pencil-alt"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                            </button>
+
+                            <button type="submit" (click)="delete(cartItem)"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon icon="times"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

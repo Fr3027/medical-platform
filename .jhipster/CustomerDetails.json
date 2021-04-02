@@ -53,10 +53,11 @@
       "useJPADerivedIdentifier": true
     },
     {
-      "relationshipType": "one-to-many",
+      "relationshipType": "one-to-one",
       "otherEntityName": "shoppingCart",
       "otherEntityRelationshipName": "customerDetails",
-      "relationshipName": "cart"
+      "relationshipName": "shoppingCart",
+      "ownerSide": false
     }
   ],
   "changelogDate": "20210324105454",

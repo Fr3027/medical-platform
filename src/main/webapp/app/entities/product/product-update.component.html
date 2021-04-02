@@ -152,10 +152,18 @@
                 </div>
 
                 <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="demoApp.product.user" for="field_user">User</label>
+                    <select class="form-control" id="field_user" name="user" formControlName="user">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="userOption.id === editForm.get('user')!.value?.id ? editForm.get('user')!.value : userOption" *ngFor="let userOption of users; trackBy: trackById">{{ userOption.id }}</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
                     <label class="form-control-label" jhiTranslate="demoApp.product.productCategory" for="field_productCategory">Product Category</label>
                     <select class="form-control" id="field_productCategory" name="productCategory" formControlName="productCategory">
                         <option *ngIf="!editForm.get('productCategory')!.value" [ngValue]="null" selected></option>
-                        <option [ngValue]="productCategoryOption.id === editForm.get('productCategory')!.value?.id ? editForm.get('productCategory')!.value : productCategoryOption" *ngFor="let productCategoryOption of productcategories; trackBy: trackById">{{ productCategoryOption.name }}</option>
+                        <option [ngValue]="productCategoryOption.id === editForm.get('productCategory')!.value?.id ? editForm.get('productCategory')!.value : productCategoryOption" *ngFor="let productCategoryOption of productcategories; trackBy: trackById">{{ productCategoryOption.id }}</option>
                     </select>
                 </div>
                 <div *ngIf="editForm.get('productCategory')!.invalid && (editForm.get('productCategory')!.dirty || editForm.get('productCategory')!.touched)">

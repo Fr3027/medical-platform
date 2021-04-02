@@ -18,8 +18,11 @@
       },
       "quantity": "Quantity",
       "totalPrice": "Total Price",
+      "created": "Created",
+      "address": "Address",
+      "status": "Status",
       "product": "Product",
-      "cart": "Cart"
+      "user": "User"
     }
   }
 }

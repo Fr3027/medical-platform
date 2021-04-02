@@ -49,6 +49,9 @@
             <column name="image_content_type" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
+            <column name="user_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
             <column name="product_category_id" type="bigint">
                 <constraints nullable="false" />
             </column>

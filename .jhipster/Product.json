@@ -81,7 +81,7 @@
       "otherEntityName": "user",
       "otherEntityRelationshipName": "product",
       "relationshipName": "user",
-      "otherEntityField": "login"
+      "otherEntityField": "id"
     },
     {
       "relationshipType": "many-to-one",
@@ -89,7 +89,7 @@
       "otherEntityRelationshipName": "product",
       "relationshipValidateRules": "required",
       "relationshipName": "productCategory",
-      "otherEntityField": "name"
+      "otherEntityField": "id"
     }
   ],
   "changelogDate": "20210324105254",

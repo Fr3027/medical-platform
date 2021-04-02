@@ -12,10 +12,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -46,10 +46,13 @@ public class ShoppingCartResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/shopping-carts")
-    public ResponseEntity<ShoppingCart> createShoppingCart(@Valid @RequestBody ShoppingCart shoppingCart) throws URISyntaxException {
+    public ResponseEntity<ShoppingCart> createShoppingCart(@RequestBody ShoppingCart shoppingCart) throws URISyntaxException {
         log.debug("REST request to save ShoppingCart : {}", shoppingCart);
         if (shoppingCart.getId() != null) {
             throw new BadRequestAlertException("A new shoppingCart cannot already have an ID", ENTITY_NAME, "idexists");
+        }
+        if (Objects.isNull(shoppingCart.getCustomerDetails())) {
+            throw new BadRequestAlertException("Invalid association value provided", ENTITY_NAME, "null");
         }
         ShoppingCart result = shoppingCartService.save(shoppingCart);
         return ResponseEntity.created(new URI("/api/shopping-carts/" + result.getId()))
@@ -67,7 +70,7 @@ public class ShoppingCartResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/shopping-carts")
-    public ResponseEntity<ShoppingCart> updateShoppingCart(@Valid @RequestBody ShoppingCart shoppingCart) throws URISyntaxException {
+    public ResponseEntity<ShoppingCart> updateShoppingCart(@RequestBody ShoppingCart shoppingCart) throws URISyntaxException {
         log.debug("REST request to update ShoppingCart : {}", shoppingCart);
         if (shoppingCart.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");

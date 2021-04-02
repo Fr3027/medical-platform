@@ -4,8 +4,7 @@ import { HttpResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import * as moment from 'moment';
-import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
+import { map } from 'rxjs/operators';
 
 import { IShoppingCart, ShoppingCart } from 'app/shared/model/shopping-cart.model';
 import { ShoppingCartService } from './shopping-cart.service';
@@ -22,9 +21,7 @@ export class ShoppingCartUpdateComponent implements OnInit {
 
   editForm = this.fb.group({
     id: [],
-    placedDate: [null, [Validators.required]],
-    totalPrice: [null, [Validators.required, Validators.min(0)]],
-    customerDetails: [null, Validators.required],
+    customerDetails: [],
   });
 
   constructor(
@@ -36,22 +33,35 @@ export class ShoppingCartUpdateComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ shoppingCart }) => {
-      if (!shoppingCart.id) {
-        const today = moment().startOf('day');
-        shoppingCart.placedDate = today;
-      }
-
       this.updateForm(shoppingCart);
 
-      this.customerDetailsService.query().subscribe((res: HttpResponse<ICustomerDetails[]>) => (this.customerdetails = res.body || []));
+      this.customerDetailsService
+        .query({ filter: 'shoppingcart-is-null' })
+        .pipe(
+          map((res: HttpResponse<ICustomerDetails[]>) => {
+            return res.body || [];
+          })
+        )
+        .subscribe((resBody: ICustomerDetails[]) => {
+          if (!shoppingCart.customerDetails || !shoppingCart.customerDetails.id) {
+            this.customerdetails = resBody;
+          } else {
+            this.customerDetailsService
+              .find(shoppingCart.customerDetails.id)
+              .pipe(
+                map((subRes: HttpResponse<ICustomerDetails>) => {
+                  return subRes.body ? [subRes.body].concat(resBody) : resBody;
+                })
+              )
+              .subscribe((concatRes: ICustomerDetails[]) => (this.customerdetails = concatRes));
+          }
+        });
     });
   }
 
   updateForm(shoppingCart: IShoppingCart): void {
     this.editForm.patchValue({
       id: shoppingCart.id,
-      placedDate: shoppingCart.placedDate ? shoppingCart.placedDate.format(DATE_TIME_FORMAT) : null,
-      totalPrice: shoppingCart.totalPrice,
       customerDetails: shoppingCart.customerDetails,
     });
   }
@@ -74,8 +84,6 @@ export class ShoppingCartUpdateComponent implements OnInit {
     return {
       ...new ShoppingCart(),
       id: this.editForm.get(['id'])!.value,
-      placedDate: this.editForm.get(['placedDate'])!.value ? moment(this.editForm.get(['placedDate'])!.value, DATE_TIME_FORMAT) : undefined,
-      totalPrice: this.editForm.get(['totalPrice'])!.value,
       customerDetails: this.editForm.get(['customerDetails'])!.value,
     };
   }

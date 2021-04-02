@@ -1,12 +1,17 @@
+import { Moment } from 'moment';
 import { IProduct } from 'app/shared/model/product.model';
-import { IShoppingCart } from 'app/shared/model/shopping-cart.model';
+import { IUser } from 'app/core/user/user.model';
+import { STATUS } from 'app/shared/model/enumerations/status.model';
 
 export interface IProductOrder {
   id?: number;
   quantity?: number;
   totalPrice?: number;
+  created?: Moment;
+  address?: string;
+  status?: STATUS;
   product?: IProduct;
-  cart?: IShoppingCart;
+  user?: IUser;
 }
 
 export class ProductOrder implements IProductOrder {
@@ -14,7 +19,10 @@ export class ProductOrder implements IProductOrder {
     public id?: number,
     public quantity?: number,
     public totalPrice?: number,
+    public created?: Moment,
+    public address?: string,
+    public status?: STATUS,
     public product?: IProduct,
-    public cart?: IShoppingCart
+    public user?: IUser
   ) {}
 }

@@ -11,7 +11,7 @@ export interface ICustomerDetails {
   city?: string;
   country?: string;
   user?: IUser;
-  carts?: IShoppingCart[];
+  shoppingCart?: IShoppingCart;
 }
 
 export class CustomerDetails implements ICustomerDetails {
@@ -24,6 +24,6 @@ export class CustomerDetails implements ICustomerDetails {
     public city?: string,
     public country?: string,
     public user?: IUser,
-    public carts?: IShoppingCart[]
+    public shoppingCart?: IShoppingCart
   ) {}
 }

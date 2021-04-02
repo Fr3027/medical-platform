@@ -1,14 +1,10 @@
 package com.mycompany.myapp.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,25 +19,16 @@ public class ShoppingCart implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
-    @Column(name = "placed_date", nullable = false)
-    private Instant placedDate;
+    @OneToOne
 
-    @NotNull
-    @DecimalMin(value = "0")
-    @Column(name = "total_price", precision = 21, scale = 2, nullable = false)
-    private BigDecimal totalPrice;
+    @MapsId
+    @JoinColumn(name = "id")
+    private CustomerDetails customerDetails;
 
     @OneToMany(mappedBy = "cart")
-    private Set<ProductOrder> orders = new HashSet<>();
-
-    @ManyToOne(optional = false)
-    @NotNull
-    @JsonIgnoreProperties(value = "carts", allowSetters = true)
-    private CustomerDetails customerDetails;
+    private Set<CartItem> cartItems = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -50,57 +37,6 @@ public class ShoppingCart implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Instant getPlacedDate() {
-        return placedDate;
-    }
-
-    public ShoppingCart placedDate(Instant placedDate) {
-        this.placedDate = placedDate;
-        return this;
-    }
-
-    public void setPlacedDate(Instant placedDate) {
-        this.placedDate = placedDate;
-    }
-
-    public BigDecimal getTotalPrice() {
-        return totalPrice;
-    }
-
-    public ShoppingCart totalPrice(BigDecimal totalPrice) {
-        this.totalPrice = totalPrice;
-        return this;
-    }
-
-    public void setTotalPrice(BigDecimal totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-
-    public Set<ProductOrder> getOrders() {
-        return orders;
-    }
-
-    public ShoppingCart orders(Set<ProductOrder> productOrders) {
-        this.orders = productOrders;
-        return this;
-    }
-
-    public ShoppingCart addOrder(ProductOrder productOrder) {
-        this.orders.add(productOrder);
-        productOrder.setCart(this);
-        return this;
-    }
-
-    public ShoppingCart removeOrder(ProductOrder productOrder) {
-        this.orders.remove(productOrder);
-        productOrder.setCart(null);
-        return this;
-    }
-
-    public void setOrders(Set<ProductOrder> productOrders) {
-        this.orders = productOrders;
     }
 
     public CustomerDetails getCustomerDetails() {
@@ -114,6 +50,31 @@ public class ShoppingCart implements Serializable {
 
     public void setCustomerDetails(CustomerDetails customerDetails) {
         this.customerDetails = customerDetails;
+    }
+
+    public Set<CartItem> getCartItems() {
+        return cartItems;
+    }
+
+    public ShoppingCart cartItems(Set<CartItem> cartItems) {
+        this.cartItems = cartItems;
+        return this;
+    }
+
+    public ShoppingCart addCartItem(CartItem cartItem) {
+        this.cartItems.add(cartItem);
+        cartItem.setCart(this);
+        return this;
+    }
+
+    public ShoppingCart removeCartItem(CartItem cartItem) {
+        this.cartItems.remove(cartItem);
+        cartItem.setCart(null);
+        return this;
+    }
+
+    public void setCartItems(Set<CartItem> cartItems) {
+        this.cartItems = cartItems;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
@@ -138,8 +99,6 @@ public class ShoppingCart implements Serializable {
     public String toString() {
         return "ShoppingCart{" +
             "id=" + getId() +
-            ", placedDate='" + getPlacedDate() + "'" +
-            ", totalPrice=" + getTotalPrice() +
             "}";
     }
 }

@@ -14,11 +14,11 @@
                                  referencedColumnNames="id"
                                  referencedTableName="product"/>
 
-        <addForeignKeyConstraint baseColumnNames="cart_id"
+        <addForeignKeyConstraint baseColumnNames="user_id"
                                  baseTableName="product_order"
-                                 constraintName="fk_product_order_cart_id"
+                                 constraintName="fk_product_order_user_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="shopping_cart"/>
+                                 referencedTableName="jhi_user"/>
 
     </changeSet>
 </databaseChangeLog>

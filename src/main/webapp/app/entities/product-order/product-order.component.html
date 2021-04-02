@@ -25,8 +25,11 @@
                     <th scope="col" ><span jhiTranslate="global.field.id">ID</span></th>
                     <th scope="col" ><span jhiTranslate="demoApp.productOrder.quantity">Quantity</span></th>
                     <th scope="col" ><span jhiTranslate="demoApp.productOrder.totalPrice">Total Price</span></th>
+                    <th scope="col" ><span jhiTranslate="demoApp.productOrder.created">Created</span></th>
+                    <th scope="col" ><span jhiTranslate="demoApp.productOrder.address">Address</span></th>
+                    <th scope="col" ><span jhiTranslate="demoApp.productOrder.status">Status</span></th>
                     <th scope="col" ><span jhiTranslate="demoApp.productOrder.product">Product</span></th>
-                    <th scope="col" ><span jhiTranslate="demoApp.productOrder.cart">Cart</span></th>
+                    <th scope="col" ><span jhiTranslate="demoApp.productOrder.user">User</span></th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -35,15 +38,16 @@
                     <td><a [routerLink]="['/product-order', productOrder.id, 'view']">{{ productOrder.id }}</a></td>
                     <td>{{ productOrder.quantity }}</td>
                     <td>{{ productOrder.totalPrice }}</td>
+                    <td>{{ productOrder.created | date:'medium' }}</td>
+                    <td>{{ productOrder.address }}</td>
+                    <td jhiTranslate="{{ 'demoApp.STATUS.' + productOrder.status }}">{{ productOrder.status }}</td>
                     <td>
                         <div *ngIf="productOrder.product">
-                            <a [routerLink]="['/product', productOrder.product?.id, 'view']" >{{ productOrder.product?.name }}</a>
+                            <a [routerLink]="['/product', productOrder.product?.id, 'view']" >{{ productOrder.product?.id }}</a>
                         </div>
                     </td>
                     <td>
-                        <div *ngIf="productOrder.cart">
-                            <a [routerLink]="['/shopping-cart', productOrder.cart?.id, 'view']" >{{ productOrder.cart?.id }}</a>
-                        </div>
+                        {{ productOrder.user?.id }}
                     </td>
                     <td class="text-right">
                         <div class="btn-group">

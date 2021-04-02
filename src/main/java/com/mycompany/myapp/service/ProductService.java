@@ -10,7 +10,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -73,9 +72,4 @@ public class ProductService {
         log.debug("Request to delete Product : {}", id);
         productRepository.deleteById(id);
     }
-
-    public Page<Product> findByUserIsCurrentUser(Pageable pageable){
-        return productRepository.findByUserIsCurrentUser(pageable);
-    }
-    
 }

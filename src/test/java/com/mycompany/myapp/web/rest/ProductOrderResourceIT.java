@@ -3,7 +3,7 @@ package com.mycompany.myapp.web.rest;
 import com.mycompany.myapp.DemoApp;
 import com.mycompany.myapp.domain.ProductOrder;
 import com.mycompany.myapp.domain.Product;
-import com.mycompany.myapp.domain.ShoppingCart;
+import com.mycompany.myapp.domain.User;
 import com.mycompany.myapp.repository.ProductOrderRepository;
 import com.mycompany.myapp.service.ProductOrderService;
 
@@ -17,14 +17,19 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
-import java.math.BigDecimal;
+import java.time.Instant;
+import java.time.ZonedDateTime;
+import java.time.ZoneOffset;
+import java.time.ZoneId;
 import java.util.List;
 
+import static com.mycompany.myapp.web.rest.TestUtil.sameInstant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import com.mycompany.myapp.domain.enumeration.STATUS;
 /**
  * Integration tests for the {@link ProductOrderResource} REST controller.
  */
@@ -36,8 +41,17 @@ public class ProductOrderResourceIT {
     private static final Integer DEFAULT_QUANTITY = 0;
     private static final Integer UPDATED_QUANTITY = 1;
 
-    private static final BigDecimal DEFAULT_TOTAL_PRICE = new BigDecimal(0);
-    private static final BigDecimal UPDATED_TOTAL_PRICE = new BigDecimal(1);
+    private static final Integer DEFAULT_TOTAL_PRICE = 0;
+    private static final Integer UPDATED_TOTAL_PRICE = 1;
+
+    private static final ZonedDateTime DEFAULT_CREATED = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
+    private static final ZonedDateTime UPDATED_CREATED = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
+
+    private static final String DEFAULT_ADDRESS = "AAAAAAAAAA";
+    private static final String UPDATED_ADDRESS = "BBBBBBBBBB";
+
+    private static final STATUS DEFAULT_STATUS = STATUS.NEW;
+    private static final STATUS UPDATED_STATUS = STATUS.CANCEL;
 
     @Autowired
     private ProductOrderRepository productOrderRepository;
@@ -62,7 +76,10 @@ public class ProductOrderResourceIT {
     public static ProductOrder createEntity(EntityManager em) {
         ProductOrder productOrder = new ProductOrder()
             .quantity(DEFAULT_QUANTITY)
-            .totalPrice(DEFAULT_TOTAL_PRICE);
+            .totalPrice(DEFAULT_TOTAL_PRICE)
+            .created(DEFAULT_CREATED)
+            .address(DEFAULT_ADDRESS)
+            .status(DEFAULT_STATUS);
         // Add required entity
         Product product;
         if (TestUtil.findAll(em, Product.class).isEmpty()) {
@@ -74,15 +91,10 @@ public class ProductOrderResourceIT {
         }
         productOrder.setProduct(product);
         // Add required entity
-        ShoppingCart shoppingCart;
-        if (TestUtil.findAll(em, ShoppingCart.class).isEmpty()) {
-            shoppingCart = ShoppingCartResourceIT.createEntity(em);
-            em.persist(shoppingCart);
-            em.flush();
-        } else {
-            shoppingCart = TestUtil.findAll(em, ShoppingCart.class).get(0);
-        }
-        productOrder.setCart(shoppingCart);
+        User user = UserResourceIT.createEntity(em);
+        em.persist(user);
+        em.flush();
+        productOrder.setUser(user);
         return productOrder;
     }
     /**
@@ -94,7 +106,10 @@ public class ProductOrderResourceIT {
     public static ProductOrder createUpdatedEntity(EntityManager em) {
         ProductOrder productOrder = new ProductOrder()
             .quantity(UPDATED_QUANTITY)
-            .totalPrice(UPDATED_TOTAL_PRICE);
+            .totalPrice(UPDATED_TOTAL_PRICE)
+            .created(UPDATED_CREATED)
+            .address(UPDATED_ADDRESS)
+            .status(UPDATED_STATUS);
         // Add required entity
         Product product;
         if (TestUtil.findAll(em, Product.class).isEmpty()) {
@@ -106,15 +121,10 @@ public class ProductOrderResourceIT {
         }
         productOrder.setProduct(product);
         // Add required entity
-        ShoppingCart shoppingCart;
-        if (TestUtil.findAll(em, ShoppingCart.class).isEmpty()) {
-            shoppingCart = ShoppingCartResourceIT.createUpdatedEntity(em);
-            em.persist(shoppingCart);
-            em.flush();
-        } else {
-            shoppingCart = TestUtil.findAll(em, ShoppingCart.class).get(0);
-        }
-        productOrder.setCart(shoppingCart);
+        User user = UserResourceIT.createEntity(em);
+        em.persist(user);
+        em.flush();
+        productOrder.setUser(user);
         return productOrder;
     }
 
@@ -139,6 +149,9 @@ public class ProductOrderResourceIT {
         ProductOrder testProductOrder = productOrderList.get(productOrderList.size() - 1);
         assertThat(testProductOrder.getQuantity()).isEqualTo(DEFAULT_QUANTITY);
         assertThat(testProductOrder.getTotalPrice()).isEqualTo(DEFAULT_TOTAL_PRICE);
+        assertThat(testProductOrder.getCreated()).isEqualTo(DEFAULT_CREATED);
+        assertThat(testProductOrder.getAddress()).isEqualTo(DEFAULT_ADDRESS);
+        assertThat(testProductOrder.getStatus()).isEqualTo(DEFAULT_STATUS);
     }
 
     @Test
@@ -201,6 +214,63 @@ public class ProductOrderResourceIT {
 
     @Test
     @Transactional
+    public void checkCreatedIsRequired() throws Exception {
+        int databaseSizeBeforeTest = productOrderRepository.findAll().size();
+        // set the field null
+        productOrder.setCreated(null);
+
+        // Create the ProductOrder, which fails.
+
+
+        restProductOrderMockMvc.perform(post("/api/product-orders")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(productOrder)))
+            .andExpect(status().isBadRequest());
+
+        List<ProductOrder> productOrderList = productOrderRepository.findAll();
+        assertThat(productOrderList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkAddressIsRequired() throws Exception {
+        int databaseSizeBeforeTest = productOrderRepository.findAll().size();
+        // set the field null
+        productOrder.setAddress(null);
+
+        // Create the ProductOrder, which fails.
+
+
+        restProductOrderMockMvc.perform(post("/api/product-orders")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(productOrder)))
+            .andExpect(status().isBadRequest());
+
+        List<ProductOrder> productOrderList = productOrderRepository.findAll();
+        assertThat(productOrderList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkStatusIsRequired() throws Exception {
+        int databaseSizeBeforeTest = productOrderRepository.findAll().size();
+        // set the field null
+        productOrder.setStatus(null);
+
+        // Create the ProductOrder, which fails.
+
+
+        restProductOrderMockMvc.perform(post("/api/product-orders")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(productOrder)))
+            .andExpect(status().isBadRequest());
+
+        List<ProductOrder> productOrderList = productOrderRepository.findAll();
+        assertThat(productOrderList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllProductOrders() throws Exception {
         // Initialize the database
         productOrderRepository.saveAndFlush(productOrder);
@@ -211,7 +281,10 @@ public class ProductOrderResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(productOrder.getId().intValue())))
             .andExpect(jsonPath("$.[*].quantity").value(hasItem(DEFAULT_QUANTITY)))
-            .andExpect(jsonPath("$.[*].totalPrice").value(hasItem(DEFAULT_TOTAL_PRICE.intValue())));
+            .andExpect(jsonPath("$.[*].totalPrice").value(hasItem(DEFAULT_TOTAL_PRICE)))
+            .andExpect(jsonPath("$.[*].created").value(hasItem(sameInstant(DEFAULT_CREATED))))
+            .andExpect(jsonPath("$.[*].address").value(hasItem(DEFAULT_ADDRESS)))
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
     }
     
     @Test
@@ -226,7 +299,10 @@ public class ProductOrderResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(productOrder.getId().intValue()))
             .andExpect(jsonPath("$.quantity").value(DEFAULT_QUANTITY))
-            .andExpect(jsonPath("$.totalPrice").value(DEFAULT_TOTAL_PRICE.intValue()));
+            .andExpect(jsonPath("$.totalPrice").value(DEFAULT_TOTAL_PRICE))
+            .andExpect(jsonPath("$.created").value(sameInstant(DEFAULT_CREATED)))
+            .andExpect(jsonPath("$.address").value(DEFAULT_ADDRESS))
+            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()));
     }
     @Test
     @Transactional
@@ -250,7 +326,10 @@ public class ProductOrderResourceIT {
         em.detach(updatedProductOrder);
         updatedProductOrder
             .quantity(UPDATED_QUANTITY)
-            .totalPrice(UPDATED_TOTAL_PRICE);
+            .totalPrice(UPDATED_TOTAL_PRICE)
+            .created(UPDATED_CREATED)
+            .address(UPDATED_ADDRESS)
+            .status(UPDATED_STATUS);
 
         restProductOrderMockMvc.perform(put("/api/product-orders")
             .contentType(MediaType.APPLICATION_JSON)
@@ -263,6 +342,9 @@ public class ProductOrderResourceIT {
         ProductOrder testProductOrder = productOrderList.get(productOrderList.size() - 1);
         assertThat(testProductOrder.getQuantity()).isEqualTo(UPDATED_QUANTITY);
         assertThat(testProductOrder.getTotalPrice()).isEqualTo(UPDATED_TOTAL_PRICE);
+        assertThat(testProductOrder.getCreated()).isEqualTo(UPDATED_CREATED);
+        assertThat(testProductOrder.getAddress()).isEqualTo(UPDATED_ADDRESS);
+        assertThat(testProductOrder.getStatus()).isEqualTo(UPDATED_STATUS);
     }
 
     @Test

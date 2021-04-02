@@ -7,7 +7,9 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
+import java.time.ZonedDateTime;
+
+import com.mycompany.myapp.domain.enumeration.STATUS;
 
 /**
  * Product order keeps track of orders
@@ -29,9 +31,22 @@ public class ProductOrder implements Serializable {
     private Integer quantity;
 
     @NotNull
-    @DecimalMin(value = "0")
-    @Column(name = "total_price", precision = 21, scale = 2, nullable = false)
-    private BigDecimal totalPrice;
+    @Min(value = 0)
+    @Column(name = "total_price", nullable = false)
+    private Integer totalPrice;
+
+    @NotNull
+    @Column(name = "created", nullable = false)
+    private ZonedDateTime created;
+
+    @NotNull
+    @Column(name = "address", nullable = false)
+    private String address;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
+    private STATUS status;
 
     @ManyToOne(optional = false)
     @NotNull
@@ -40,8 +55,8 @@ public class ProductOrder implements Serializable {
 
     @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties(value = "orders", allowSetters = true)
-    private ShoppingCart cart;
+    @JsonIgnoreProperties(value = "productOrders", allowSetters = true)
+    private User user;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -65,17 +80,56 @@ public class ProductOrder implements Serializable {
         this.quantity = quantity;
     }
 
-    public BigDecimal getTotalPrice() {
+    public Integer getTotalPrice() {
         return totalPrice;
     }
 
-    public ProductOrder totalPrice(BigDecimal totalPrice) {
+    public ProductOrder totalPrice(Integer totalPrice) {
         this.totalPrice = totalPrice;
         return this;
     }
 
-    public void setTotalPrice(BigDecimal totalPrice) {
+    public void setTotalPrice(Integer totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    public ZonedDateTime getCreated() {
+        return created;
+    }
+
+    public ProductOrder created(ZonedDateTime created) {
+        this.created = created;
+        return this;
+    }
+
+    public void setCreated(ZonedDateTime created) {
+        this.created = created;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public ProductOrder address(String address) {
+        this.address = address;
+        return this;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public STATUS getStatus() {
+        return status;
+    }
+
+    public ProductOrder status(STATUS status) {
+        this.status = status;
+        return this;
+    }
+
+    public void setStatus(STATUS status) {
+        this.status = status;
     }
 
     public Product getProduct() {
@@ -91,17 +145,17 @@ public class ProductOrder implements Serializable {
         this.product = product;
     }
 
-    public ShoppingCart getCart() {
-        return cart;
+    public User getUser() {
+        return user;
     }
 
-    public ProductOrder cart(ShoppingCart shoppingCart) {
-        this.cart = shoppingCart;
+    public ProductOrder user(User user) {
+        this.user = user;
         return this;
     }
 
-    public void setCart(ShoppingCart shoppingCart) {
-        this.cart = shoppingCart;
+    public void setUser(User user) {
+        this.user = user;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
@@ -128,6 +182,9 @@ public class ProductOrder implements Serializable {
             "id=" + getId() +
             ", quantity=" + getQuantity() +
             ", totalPrice=" + getTotalPrice() +
+            ", created='" + getCreated() + "'" +
+            ", address='" + getAddress() + "'" +
+            ", status='" + getStatus() + "'" +
             "}";
     }
 }

@@ -16,17 +16,27 @@
                 <dd>
                     <span>{{ productOrder.totalPrice }}</span>
                 </dd>
+                <dt><span jhiTranslate="demoApp.productOrder.created">Created</span></dt>
+                <dd>
+                    <span>{{ productOrder.created }}</span>
+                </dd>
+                <dt><span jhiTranslate="demoApp.productOrder.address">Address</span></dt>
+                <dd>
+                    <span>{{ productOrder.address }}</span>
+                </dd>
+                <dt><span jhiTranslate="demoApp.productOrder.status">Status</span></dt>
+                <dd>
+                    <span jhiTranslate="{{ 'demoApp.STATUS.' + productOrder.status }}">{{ productOrder.status }}</span>
+                </dd>
                 <dt><span jhiTranslate="demoApp.productOrder.product">Product</span></dt>
                 <dd>
                     <div *ngIf="productOrder.product">
-                        <a [routerLink]="['/product', productOrder.product?.id, 'view']">{{ productOrder.product?.name }}</a>
+                        <a [routerLink]="['/product', productOrder.product?.id, 'view']">{{ productOrder.product?.id }}</a>
                     </div>
                 </dd>
-                <dt><span jhiTranslate="demoApp.productOrder.cart">Cart</span></dt>
+                <dt><span jhiTranslate="demoApp.productOrder.user">User</span></dt>
                 <dd>
-                    <div *ngIf="productOrder.cart">
-                        <a [routerLink]="['/shopping-cart', productOrder.cart?.id, 'view']">{{ productOrder.cart?.id }}</a>
-                    </div>
+                    {{ productOrder.user?.id }}
                 </dd>
             </dl>
 

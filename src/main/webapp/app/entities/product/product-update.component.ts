@@ -13,7 +13,6 @@ import { IUser } from 'app/core/user/user.model';
 import { UserService } from 'app/core/user/user.service';
 import { IProductCategory } from 'app/shared/model/product-category.model';
 import { ProductCategoryService } from 'app/entities/product-category/product-category.service';
-import { AccountService } from 'app/core/auth/account.service';
 
 type SelectableEntity = IUser | IProductCategory;
 
@@ -23,8 +22,9 @@ type SelectableEntity = IUser | IProductCategory;
 })
 export class ProductUpdateComponent implements OnInit {
   isSaving = false;
-  user!: IUser;
+  users: IUser[] = [];
   productcategories: IProductCategory[] = [];
+
   editForm = this.fb.group({
     id: [],
     name: [null, [Validators.required]],
@@ -38,12 +38,12 @@ export class ProductUpdateComponent implements OnInit {
     validPeriod: [null, [Validators.required]],
     image: [null, [Validators.required]],
     imageContentType: [],
+    user: [],
     productCategory: [null, Validators.required],
   });
 
   constructor(
     protected dataUtils: JhiDataUtils,
-    private accountService: AccountService,
     protected eventManager: JhiEventManager,
     protected productService: ProductService,
     protected userService: UserService,
@@ -56,9 +56,9 @@ export class ProductUpdateComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ product }) => {
       this.updateForm(product);
-      this.accountService.identity().subscribe(account => {
-        this.userService.find(account!.login).subscribe(user => (this.user = user));
-      });
+
+      this.userService.query().subscribe((res: HttpResponse<IUser[]>) => (this.users = res.body || []));
+
       this.productCategoryService.query().subscribe((res: HttpResponse<IProductCategory[]>) => (this.productcategories = res.body || []));
     });
   }
@@ -77,6 +77,7 @@ export class ProductUpdateComponent implements OnInit {
       validPeriod: product.validPeriod,
       image: product.image,
       imageContentType: product.imageContentType,
+      user: product.user,
       productCategory: product.productCategory,
     });
   }
@@ -114,8 +115,6 @@ export class ProductUpdateComponent implements OnInit {
   save(): void {
     this.isSaving = true;
     const product = this.createFromForm();
-    product.user = this.user;
-    console.warn(product);
     if (product.id !== undefined) {
       this.subscribeToSaveResponse(this.productService.update(product));
     } else {
@@ -138,6 +137,7 @@ export class ProductUpdateComponent implements OnInit {
       validPeriod: this.editForm.get(['validPeriod'])!.value,
       imageContentType: this.editForm.get(['imageContentType'])!.value,
       image: this.editForm.get(['image'])!.value,
+      user: this.editForm.get(['user'])!.value,
       productCategory: this.editForm.get(['productCategory'])!.value,
     };
   }

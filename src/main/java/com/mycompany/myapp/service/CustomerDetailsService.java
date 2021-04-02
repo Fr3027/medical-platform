@@ -11,7 +11,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 /**
  * Service Implementation for managing {@link CustomerDetails}.
@@ -56,6 +59,20 @@ public class CustomerDetailsService {
         return customerDetailsRepository.findAll(pageable);
     }
 
+
+
+    /**
+     *  Get all the customerDetails where ShoppingCart is {@code null}.
+     *  @return the list of entities.
+     */
+    @Transactional(readOnly = true) 
+    public List<CustomerDetails> findAllWhereShoppingCartIsNull() {
+        log.debug("Request to get all customerDetails where ShoppingCart is null");
+        return StreamSupport
+            .stream(customerDetailsRepository.findAll().spliterator(), false)
+            .filter(customerDetails -> customerDetails.getShoppingCart() == null)
+            .collect(Collectors.toList());
+    }
 
     /**
      * Get one customerDetails by id.

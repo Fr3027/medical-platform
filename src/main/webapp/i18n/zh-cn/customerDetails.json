@@ -23,7 +23,7 @@
       "city": "City",
       "country": "Country",
       "user": "User",
-      "cart": "Cart"
+      "shoppingCart": "Shopping Cart"
     }
   }
 }

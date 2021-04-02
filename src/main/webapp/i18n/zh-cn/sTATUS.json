@@ -1,0 +1,10 @@
+{
+  "demoApp": {
+    "STATUS": {
+      "null": "",
+      "NEW": "NEW",
+      "CANCEL": "CANCEL",
+      "COMPLETED": "COMPLETED"
+    }
+  }
+}

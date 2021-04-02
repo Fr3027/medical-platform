@@ -2,6 +2,7 @@ package com.mycompany.myapp.service;
 
 import com.mycompany.myapp.domain.ShoppingCart;
 import com.mycompany.myapp.repository.ShoppingCartRepository;
+import com.mycompany.myapp.repository.CustomerDetailsRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,8 +23,11 @@ public class ShoppingCartService {
 
     private final ShoppingCartRepository shoppingCartRepository;
 
-    public ShoppingCartService(ShoppingCartRepository shoppingCartRepository) {
+    private final CustomerDetailsRepository customerDetailsRepository;
+
+    public ShoppingCartService(ShoppingCartRepository shoppingCartRepository, CustomerDetailsRepository customerDetailsRepository) {
         this.shoppingCartRepository = shoppingCartRepository;
+        this.customerDetailsRepository = customerDetailsRepository;
     }
 
     /**
@@ -34,6 +38,8 @@ public class ShoppingCartService {
      */
     public ShoppingCart save(ShoppingCart shoppingCart) {
         log.debug("Request to save ShoppingCart : {}", shoppingCart);
+        Long customerDetailsId = shoppingCart.getCustomerDetails().getId();
+        customerDetailsRepository.findById(customerDetailsId).ifPresent(shoppingCart::customerDetails);
         return shoppingCartRepository.save(shoppingCart);
     }
 

@@ -4,15 +4,17 @@ import { HttpResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
+import * as moment from 'moment';
+import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 
 import { IProductOrder, ProductOrder } from 'app/shared/model/product-order.model';
 import { ProductOrderService } from './product-order.service';
 import { IProduct } from 'app/shared/model/product.model';
 import { ProductService } from 'app/entities/product/product.service';
-import { IShoppingCart } from 'app/shared/model/shopping-cart.model';
-import { ShoppingCartService } from 'app/entities/shopping-cart/shopping-cart.service';
+import { IUser } from 'app/core/user/user.model';
+import { UserService } from 'app/core/user/user.service';
 
-type SelectableEntity = IProduct | IShoppingCart;
+type SelectableEntity = IProduct | IUser;
 
 @Component({
   selector: 'jhi-product-order-update',
@@ -21,31 +23,39 @@ type SelectableEntity = IProduct | IShoppingCart;
 export class ProductOrderUpdateComponent implements OnInit {
   isSaving = false;
   products: IProduct[] = [];
-  shoppingcarts: IShoppingCart[] = [];
+  users: IUser[] = [];
 
   editForm = this.fb.group({
     id: [],
     quantity: [null, [Validators.required, Validators.min(0)]],
     totalPrice: [null, [Validators.required, Validators.min(0)]],
+    created: [null, [Validators.required]],
+    address: [null, [Validators.required]],
+    status: [null, [Validators.required]],
     product: [null, Validators.required],
-    cart: [null, Validators.required],
+    user: [null, Validators.required],
   });
 
   constructor(
     protected productOrderService: ProductOrderService,
     protected productService: ProductService,
-    protected shoppingCartService: ShoppingCartService,
+    protected userService: UserService,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ productOrder }) => {
+      if (!productOrder.id) {
+        const today = moment().startOf('day');
+        productOrder.created = today;
+      }
+
       this.updateForm(productOrder);
 
       this.productService.query().subscribe((res: HttpResponse<IProduct[]>) => (this.products = res.body || []));
 
-      this.shoppingCartService.query().subscribe((res: HttpResponse<IShoppingCart[]>) => (this.shoppingcarts = res.body || []));
+      this.userService.query().subscribe((res: HttpResponse<IUser[]>) => (this.users = res.body || []));
     });
   }
 
@@ -54,8 +64,11 @@ export class ProductOrderUpdateComponent implements OnInit {
       id: productOrder.id,
       quantity: productOrder.quantity,
       totalPrice: productOrder.totalPrice,
+      created: productOrder.created ? productOrder.created.format(DATE_TIME_FORMAT) : null,
+      address: productOrder.address,
+      status: productOrder.status,
       product: productOrder.product,
-      cart: productOrder.cart,
+      user: productOrder.user,
     });
   }
 
@@ -79,8 +92,11 @@ export class ProductOrderUpdateComponent implements OnInit {
       id: this.editForm.get(['id'])!.value,
       quantity: this.editForm.get(['quantity'])!.value,
       totalPrice: this.editForm.get(['totalPrice'])!.value,
+      created: this.editForm.get(['created'])!.value ? moment(this.editForm.get(['created'])!.value, DATE_TIME_FORMAT) : undefined,
+      address: this.editForm.get(['address'])!.value,
+      status: this.editForm.get(['status'])!.value,
       product: this.editForm.get(['product'])!.value,
-      cart: this.editForm.get(['cart'])!.value,
+      user: this.editForm.get(['user'])!.value,
     };
   }
 

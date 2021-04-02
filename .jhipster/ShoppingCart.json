@@ -1,37 +1,21 @@
 {
   "name": "ShoppingCart",
-  "fields": [
-    {
-      "fieldName": "placedDate",
-      "fieldType": "Instant",
-      "fieldValidateRules": [
-        "required"
-      ]
-    },
-    {
-      "fieldName": "totalPrice",
-      "fieldType": "BigDecimal",
-      "fieldValidateRules": [
-        "required",
-        "min"
-      ],
-      "fieldValidateRulesMin": "0"
-    }
-  ],
+  "fields": [],
   "relationships": [
     {
-      "relationshipType": "one-to-many",
-      "otherEntityName": "productOrder",
-      "otherEntityRelationshipName": "cart",
-      "relationshipName": "order"
+      "relationshipType": "one-to-one",
+      "otherEntityName": "customerDetails",
+      "otherEntityRelationshipName": "shoppingCart",
+      "relationshipName": "customerDetails",
+      "otherEntityField": "id",
+      "ownerSide": true,
+      "useJPADerivedIdentifier": true
     },
     {
-      "relationshipType": "many-to-one",
-      "otherEntityName": "customerDetails",
+      "relationshipType": "one-to-many",
+      "otherEntityName": "cartItem",
       "otherEntityRelationshipName": "cart",
-      "relationshipValidateRules": "required",
-      "relationshipName": "customerDetails",
-      "otherEntityField": "id"
+      "relationshipName": "cartItem"
     }
   ],
   "changelogDate": "20210324105554",

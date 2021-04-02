@@ -52,10 +52,54 @@
                 </div>
 
                 <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="demoApp.productOrder.created" for="field_created">Created</label>
+                    <div class="d-flex">
+                        <input id="field_created" type="datetime-local" class="form-control" name="created" formControlName="created" placeholder="YYYY-MM-DD HH:mm"/>
+                    </div>
+                    <div *ngIf="editForm.get('created')!.invalid && (editForm.get('created')!.dirty || editForm.get('created')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('created')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('created')?.errors?.ZonedDateTimelocal" jhiTranslate="entity.validation.ZonedDateTimelocal">
+                            This field should be a date and time.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="demoApp.productOrder.address" for="field_address">Address</label>
+                    <input type="text" class="form-control" name="address" id="field_address"
+                           formControlName="address"/>
+                    <div *ngIf="editForm.get('address')!.invalid && (editForm.get('address')!.dirty || editForm.get('address')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('address')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="demoApp.productOrder.status" for="field_status">Status</label>
+                    <select class="form-control" name="status" formControlName="status" id="field_status">
+                        <option value="NEW">{{ 'demoApp.STATUS.NEW' | translate }}</option>
+                        <option value="CANCEL">{{ 'demoApp.STATUS.CANCEL' | translate }}</option>
+                        <option value="COMPLETED">{{ 'demoApp.STATUS.COMPLETED' | translate }}</option>
+                    </select>
+                    <div *ngIf="editForm.get('status')!.invalid && (editForm.get('status')!.dirty || editForm.get('status')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('status')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <label class="form-control-label" jhiTranslate="demoApp.productOrder.product" for="field_product">Product</label>
                     <select class="form-control" id="field_product" name="product" formControlName="product">
                         <option *ngIf="!editForm.get('product')!.value" [ngValue]="null" selected></option>
-                        <option [ngValue]="productOption.id === editForm.get('product')!.value?.id ? editForm.get('product')!.value : productOption" *ngFor="let productOption of products; trackBy: trackById">{{ productOption.name }}</option>
+                        <option [ngValue]="productOption.id === editForm.get('product')!.value?.id ? editForm.get('product')!.value : productOption" *ngFor="let productOption of products; trackBy: trackById">{{ productOption.id }}</option>
                     </select>
                 </div>
                 <div *ngIf="editForm.get('product')!.invalid && (editForm.get('product')!.dirty || editForm.get('product')!.touched)">
@@ -66,15 +110,15 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="demoApp.productOrder.cart" for="field_cart">Cart</label>
-                    <select class="form-control" id="field_cart" name="cart" formControlName="cart">
-                        <option *ngIf="!editForm.get('cart')!.value" [ngValue]="null" selected></option>
-                        <option [ngValue]="shoppingCartOption.id === editForm.get('cart')!.value?.id ? editForm.get('cart')!.value : shoppingCartOption" *ngFor="let shoppingCartOption of shoppingcarts; trackBy: trackById">{{ shoppingCartOption.id }}</option>
+                    <label class="form-control-label" jhiTranslate="demoApp.productOrder.user" for="field_user">User</label>
+                    <select class="form-control" id="field_user" name="user" formControlName="user">
+                        <option *ngIf="!editForm.get('user')!.value" [ngValue]="null" selected></option>
+                        <option [ngValue]="userOption.id === editForm.get('user')!.value?.id ? editForm.get('user')!.value : userOption" *ngFor="let userOption of users; trackBy: trackById">{{ userOption.id }}</option>
                     </select>
                 </div>
-                <div *ngIf="editForm.get('cart')!.invalid && (editForm.get('cart')!.dirty || editForm.get('cart')!.touched)">
+                <div *ngIf="editForm.get('user')!.invalid && (editForm.get('user')!.dirty || editForm.get('user')!.touched)">
                     <small class="form-text text-danger"
-                           *ngIf="editForm.get('cart')?.errors?.required" jhiTranslate="entity.validation.required">
+                           *ngIf="editForm.get('user')?.errors?.required" jhiTranslate="entity.validation.required">
                         This field is required.
                     </small>
                 </div>

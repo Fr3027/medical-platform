@@ -1,13 +1,12 @@
 package com.mycompany.myapp.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 import com.mycompany.myapp.domain.enumeration.Gender;
 
@@ -54,8 +53,9 @@ public class CustomerDetails implements Serializable {
     @JoinColumn(name = "id")
     private User user;
 
-    @OneToMany(mappedBy = "customerDetails")
-    private Set<ShoppingCart> carts = new HashSet<>();
+    @OneToOne(mappedBy = "customerDetails")
+    @JsonIgnore
+    private ShoppingCart shoppingCart;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -157,29 +157,17 @@ public class CustomerDetails implements Serializable {
         this.user = user;
     }
 
-    public Set<ShoppingCart> getCarts() {
-        return carts;
+    public ShoppingCart getShoppingCart() {
+        return shoppingCart;
     }
 
-    public CustomerDetails carts(Set<ShoppingCart> shoppingCarts) {
-        this.carts = shoppingCarts;
+    public CustomerDetails shoppingCart(ShoppingCart shoppingCart) {
+        this.shoppingCart = shoppingCart;
         return this;
     }
 
-    public CustomerDetails addCart(ShoppingCart shoppingCart) {
-        this.carts.add(shoppingCart);
-        shoppingCart.setCustomerDetails(this);
-        return this;
-    }
-
-    public CustomerDetails removeCart(ShoppingCart shoppingCart) {
-        this.carts.remove(shoppingCart);
-        shoppingCart.setCustomerDetails(null);
-        return this;
-    }
-
-    public void setCarts(Set<ShoppingCart> shoppingCarts) {
-        this.carts = shoppingCarts;
+    public void setShoppingCart(ShoppingCart shoppingCart) {
+        this.shoppingCart = shoppingCart;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 

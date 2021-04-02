@@ -16,9 +16,6 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
-import java.math.BigDecimal;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -33,12 +30,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @WithMockUser
 public class ShoppingCartResourceIT {
-
-    private static final Instant DEFAULT_PLACED_DATE = Instant.ofEpochMilli(0L);
-    private static final Instant UPDATED_PLACED_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
-
-    private static final BigDecimal DEFAULT_TOTAL_PRICE = new BigDecimal(0);
-    private static final BigDecimal UPDATED_TOTAL_PRICE = new BigDecimal(1);
 
     @Autowired
     private ShoppingCartRepository shoppingCartRepository;
@@ -61,9 +52,7 @@ public class ShoppingCartResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static ShoppingCart createEntity(EntityManager em) {
-        ShoppingCart shoppingCart = new ShoppingCart()
-            .placedDate(DEFAULT_PLACED_DATE)
-            .totalPrice(DEFAULT_TOTAL_PRICE);
+        ShoppingCart shoppingCart = new ShoppingCart();
         // Add required entity
         CustomerDetails customerDetails;
         if (TestUtil.findAll(em, CustomerDetails.class).isEmpty()) {
@@ -83,9 +72,7 @@ public class ShoppingCartResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static ShoppingCart createUpdatedEntity(EntityManager em) {
-        ShoppingCart shoppingCart = new ShoppingCart()
-            .placedDate(UPDATED_PLACED_DATE)
-            .totalPrice(UPDATED_TOTAL_PRICE);
+        ShoppingCart shoppingCart = new ShoppingCart();
         // Add required entity
         CustomerDetails customerDetails;
         if (TestUtil.findAll(em, CustomerDetails.class).isEmpty()) {
@@ -118,8 +105,9 @@ public class ShoppingCartResourceIT {
         List<ShoppingCart> shoppingCartList = shoppingCartRepository.findAll();
         assertThat(shoppingCartList).hasSize(databaseSizeBeforeCreate + 1);
         ShoppingCart testShoppingCart = shoppingCartList.get(shoppingCartList.size() - 1);
-        assertThat(testShoppingCart.getPlacedDate()).isEqualTo(DEFAULT_PLACED_DATE);
-        assertThat(testShoppingCart.getTotalPrice()).isEqualTo(DEFAULT_TOTAL_PRICE);
+
+        // Validate the id for MapsId, the ids must be same
+        assertThat(testShoppingCart.getId()).isEqualTo(testShoppingCart.getCustomerDetails().getId());
     }
 
     @Test
@@ -141,43 +129,41 @@ public class ShoppingCartResourceIT {
         assertThat(shoppingCartList).hasSize(databaseSizeBeforeCreate);
     }
 
-
     @Test
     @Transactional
-    public void checkPlacedDateIsRequired() throws Exception {
-        int databaseSizeBeforeTest = shoppingCartRepository.findAll().size();
-        // set the field null
-        shoppingCart.setPlacedDate(null);
+    public void updateShoppingCartMapsIdAssociationWithNewId() throws Exception {
+        // Initialize the database
+        shoppingCartService.save(shoppingCart);
+        int databaseSizeBeforeCreate = shoppingCartRepository.findAll().size();
 
-        // Create the ShoppingCart, which fails.
+        // Add a new parent entity
+        CustomerDetails customerDetails = CustomerDetailsResourceIT.createUpdatedEntity(em);
+        em.persist(customerDetails);
+        em.flush();
 
+        // Load the shoppingCart
+        ShoppingCart updatedShoppingCart = shoppingCartRepository.findById(shoppingCart.getId()).get();
+        // Disconnect from session so that the updates on updatedShoppingCart are not directly saved in db
+        em.detach(updatedShoppingCart);
 
-        restShoppingCartMockMvc.perform(post("/api/shopping-carts")
+        // Update the CustomerDetails with new association value
+        updatedShoppingCart.setCustomerDetails(customerDetails);
+
+        // Update the entity
+        restShoppingCartMockMvc.perform(put("/api/shopping-carts")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(shoppingCart)))
-            .andExpect(status().isBadRequest());
+            .content(TestUtil.convertObjectToJsonBytes(updatedShoppingCart)))
+            .andExpect(status().isOk());
 
+        // Validate the ShoppingCart in the database
         List<ShoppingCart> shoppingCartList = shoppingCartRepository.findAll();
-        assertThat(shoppingCartList).hasSize(databaseSizeBeforeTest);
-    }
+        assertThat(shoppingCartList).hasSize(databaseSizeBeforeCreate);
+        ShoppingCart testShoppingCart = shoppingCartList.get(shoppingCartList.size() - 1);
 
-    @Test
-    @Transactional
-    public void checkTotalPriceIsRequired() throws Exception {
-        int databaseSizeBeforeTest = shoppingCartRepository.findAll().size();
-        // set the field null
-        shoppingCart.setTotalPrice(null);
-
-        // Create the ShoppingCart, which fails.
-
-
-        restShoppingCartMockMvc.perform(post("/api/shopping-carts")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(shoppingCart)))
-            .andExpect(status().isBadRequest());
-
-        List<ShoppingCart> shoppingCartList = shoppingCartRepository.findAll();
-        assertThat(shoppingCartList).hasSize(databaseSizeBeforeTest);
+        // Validate the id for MapsId, the ids must be same
+        // Uncomment the following line for assertion. However, please note that there is a known issue and uncommenting will fail the test.
+        // Please look at https://github.com/jhipster/generator-jhipster/issues/9100. You can modify this test as necessary.
+        // assertThat(testShoppingCart.getId()).isEqualTo(testShoppingCart.getCustomerDetails().getId());
     }
 
     @Test
@@ -190,9 +176,7 @@ public class ShoppingCartResourceIT {
         restShoppingCartMockMvc.perform(get("/api/shopping-carts?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(shoppingCart.getId().intValue())))
-            .andExpect(jsonPath("$.[*].placedDate").value(hasItem(DEFAULT_PLACED_DATE.toString())))
-            .andExpect(jsonPath("$.[*].totalPrice").value(hasItem(DEFAULT_TOTAL_PRICE.intValue())));
+            .andExpect(jsonPath("$.[*].id").value(hasItem(shoppingCart.getId().intValue())));
     }
     
     @Test
@@ -205,9 +189,7 @@ public class ShoppingCartResourceIT {
         restShoppingCartMockMvc.perform(get("/api/shopping-carts/{id}", shoppingCart.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.id").value(shoppingCart.getId().intValue()))
-            .andExpect(jsonPath("$.placedDate").value(DEFAULT_PLACED_DATE.toString()))
-            .andExpect(jsonPath("$.totalPrice").value(DEFAULT_TOTAL_PRICE.intValue()));
+            .andExpect(jsonPath("$.id").value(shoppingCart.getId().intValue()));
     }
     @Test
     @Transactional
@@ -229,9 +211,6 @@ public class ShoppingCartResourceIT {
         ShoppingCart updatedShoppingCart = shoppingCartRepository.findById(shoppingCart.getId()).get();
         // Disconnect from session so that the updates on updatedShoppingCart are not directly saved in db
         em.detach(updatedShoppingCart);
-        updatedShoppingCart
-            .placedDate(UPDATED_PLACED_DATE)
-            .totalPrice(UPDATED_TOTAL_PRICE);
 
         restShoppingCartMockMvc.perform(put("/api/shopping-carts")
             .contentType(MediaType.APPLICATION_JSON)
@@ -242,8 +221,6 @@ public class ShoppingCartResourceIT {
         List<ShoppingCart> shoppingCartList = shoppingCartRepository.findAll();
         assertThat(shoppingCartList).hasSize(databaseSizeBeforeUpdate);
         ShoppingCart testShoppingCart = shoppingCartList.get(shoppingCartList.size() - 1);
-        assertThat(testShoppingCart.getPlacedDate()).isEqualTo(UPDATED_PLACED_DATE);
-        assertThat(testShoppingCart.getTotalPrice()).isEqualTo(UPDATED_TOTAL_PRICE);
     }
 
     @Test

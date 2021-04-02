@@ -13,6 +13,7 @@
         "shoppingCart": "Shopping Cart",
         "productOrder": "Product Order",
         "advisory": "Advisory",
+        "cartItem": "Cart Item",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

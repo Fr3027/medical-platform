@@ -23,8 +23,6 @@
             <thead>
                 <tr>
                     <th scope="col" ><span jhiTranslate="global.field.id">ID</span></th>
-                    <th scope="col" ><span jhiTranslate="demoApp.shoppingCart.placedDate">Placed Date</span></th>
-                    <th scope="col" ><span jhiTranslate="demoApp.shoppingCart.totalPrice">Total Price</span></th>
                     <th scope="col" ><span jhiTranslate="demoApp.shoppingCart.customerDetails">Customer Details</span></th>
                     <th scope="col"></th>
                 </tr>
@@ -32,8 +30,6 @@
             <tbody>
                 <tr *ngFor="let shoppingCart of shoppingCarts ;trackBy: trackId">
                     <td><a [routerLink]="['/shopping-cart', shoppingCart.id, 'view']">{{ shoppingCart.id }}</a></td>
-                    <td>{{ shoppingCart.placedDate | date:'medium' }}</td>
-                    <td>{{ shoppingCart.totalPrice }}</td>
                     <td>
                         <div *ngIf="shoppingCart.customerDetails">
                             <a [routerLink]="['/customer-details', shoppingCart.customerDetails?.id, 'view']" >{{ shoppingCart.customerDetails?.id }}</a>
