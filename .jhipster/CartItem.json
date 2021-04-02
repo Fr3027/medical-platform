@@ -21,7 +21,7 @@
       "otherEntityName": "product",
       "otherEntityRelationshipName": "cartItem",
       "relationshipName": "product",
-      "otherEntityField": "id"
+      "otherEntityField": "name"
     },
     {
       "relationshipType": "many-to-one",
@@ -35,7 +35,7 @@
   "changelogDate": "20210402023546",
   "entityTableName": "cart_item",
   "dto": "no",
-  "pagination": "no",
+  "pagination": "pagination",
   "service": "serviceClass",
   "jpaMetamodelFiltering": false,
   "fluentMethods": true,

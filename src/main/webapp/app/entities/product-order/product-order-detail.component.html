@@ -31,12 +31,12 @@
                 <dt><span jhiTranslate="demoApp.productOrder.product">Product</span></dt>
                 <dd>
                     <div *ngIf="productOrder.product">
-                        <a [routerLink]="['/product', productOrder.product?.id, 'view']">{{ productOrder.product?.id }}</a>
+                        <a [routerLink]="['/product', productOrder.product?.id, 'view']">{{ productOrder.product?.name }}</a>
                     </div>
                 </dd>
                 <dt><span jhiTranslate="demoApp.productOrder.user">User</span></dt>
                 <dd>
-                    {{ productOrder.user?.id }}
+                    {{ productOrder.user?.login }}
                 </dd>
             </dl>
 

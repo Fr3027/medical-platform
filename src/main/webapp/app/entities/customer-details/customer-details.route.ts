@@ -40,7 +40,6 @@ export const customerDetailsRoute: Routes = [
     component: CustomerDetailsComponent,
     data: {
       authorities: [Authority.USER],
-      defaultSort: 'id,asc',
       pageTitle: 'demoApp.customerDetails.home.title',
     },
     canActivate: [UserRouteAccessService],

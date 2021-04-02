@@ -55,12 +55,12 @@
                 </dd>
                 <dt><span jhiTranslate="demoApp.product.user">User</span></dt>
                 <dd>
-                    {{ product.user?.id }}
+                    {{ product.user?.login }}
                 </dd>
                 <dt><span jhiTranslate="demoApp.product.productCategory">Product Category</span></dt>
                 <dd>
                     <div *ngIf="product.productCategory">
-                        <a [routerLink]="['/product-category', product.productCategory?.id, 'view']">{{ product.productCategory?.id }}</a>
+                        <a [routerLink]="['/product-category', product.productCategory?.id, 'view']">{{ product.productCategory?.name }}</a>
                     </div>
                 </dd>
             </dl>

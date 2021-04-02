@@ -40,6 +40,7 @@ export const productOrderRoute: Routes = [
     component: ProductOrderComponent,
     data: {
       authorities: [Authority.USER],
+      defaultSort: 'id,asc',
       pageTitle: 'demoApp.productOrder.home.title',
     },
     canActivate: [UserRouteAccessService],

@@ -40,6 +40,7 @@ export const cartItemRoute: Routes = [
     component: CartItemComponent,
     data: {
       authorities: [Authority.USER],
+      defaultSort: 'id,asc',
       pageTitle: 'demoApp.cartItem.home.title',
     },
     canActivate: [UserRouteAccessService],

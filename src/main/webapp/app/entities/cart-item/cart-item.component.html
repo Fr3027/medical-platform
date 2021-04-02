@@ -21,12 +21,12 @@
     <div class="table-responsive" id="entities" *ngIf="cartItems && cartItems.length > 0">
         <table class="table table-striped" aria-describedby="page-heading">
             <thead>
-                <tr>
-                    <th scope="col" ><span jhiTranslate="global.field.id">ID</span></th>
-                    <th scope="col" ><span jhiTranslate="demoApp.cartItem.quantity">Quantity</span></th>
-                    <th scope="col" ><span jhiTranslate="demoApp.cartItem.placeDate">Place Date</span></th>
-                    <th scope="col" ><span jhiTranslate="demoApp.cartItem.product">Product</span></th>
-                    <th scope="col" ><span jhiTranslate="demoApp.cartItem.cart">Cart</span></th>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+                    <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="quantity"><span jhiTranslate="demoApp.cartItem.quantity">Quantity</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="placeDate"><span jhiTranslate="demoApp.cartItem.placeDate">Place Date</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="product.name"><span jhiTranslate="demoApp.cartItem.product">Product</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="cart.id"><span jhiTranslate="demoApp.cartItem.cart">Cart</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -37,7 +37,7 @@
                     <td>{{ cartItem.placeDate | date:'medium' }}</td>
                     <td>
                         <div *ngIf="cartItem.product">
-                            <a [routerLink]="['/product', cartItem.product?.id, 'view']" >{{ cartItem.product?.id }}</a>
+                            <a [routerLink]="['/product', cartItem.product?.id, 'view']" >{{ cartItem.product?.name }}</a>
                         </div>
                     </td>
                     <td>
@@ -71,5 +71,15 @@
                 </tr>
             </tbody>
         </table>
+    </div>
+
+    <div *ngIf="cartItems && cartItems.length > 0">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="ngbPaginationPage" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
+        </div>
     </div>
 </div>

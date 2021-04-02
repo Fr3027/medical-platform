@@ -5,10 +5,11 @@ import com.mycompany.myapp.repository.CartItemRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -40,12 +41,13 @@ public class CartItemService {
     /**
      * Get all the cartItems.
      *
+     * @param pageable the pagination information.
      * @return the list of entities.
      */
     @Transactional(readOnly = true)
-    public List<CartItem> findAll() {
+    public Page<CartItem> findAll(Pageable pageable) {
         log.debug("Request to get all CartItems");
-        return cartItemRepository.findAll();
+        return cartItemRepository.findAll(pageable);
     }
 
 

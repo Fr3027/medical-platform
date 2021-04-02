@@ -19,7 +19,7 @@
                 <dt><span jhiTranslate="demoApp.cartItem.product">Product</span></dt>
                 <dd>
                     <div *ngIf="cartItem.product">
-                        <a [routerLink]="['/product', cartItem.product?.id, 'view']">{{ cartItem.product?.id }}</a>
+                        <a [routerLink]="['/product', cartItem.product?.id, 'view']">{{ cartItem.product?.name }}</a>
                     </div>
                 </dd>
                 <dt><span jhiTranslate="demoApp.cartItem.cart">Cart</span></dt>

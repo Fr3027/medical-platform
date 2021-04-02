@@ -49,7 +49,7 @@
       "otherEntityRelationshipName": "productOrder",
       "relationshipValidateRules": "required",
       "relationshipName": "product",
-      "otherEntityField": "id"
+      "otherEntityField": "name"
     },
     {
       "relationshipType": "many-to-one",
@@ -57,14 +57,14 @@
       "otherEntityRelationshipName": "productOrder",
       "relationshipValidateRules": "required",
       "relationshipName": "user",
-      "otherEntityField": "id"
+      "otherEntityField": "login"
     }
   ],
   "changelogDate": "20210324105654",
   "javadoc": "Product order keeps track of orders",
   "entityTableName": "product_order",
   "dto": "no",
-  "pagination": "no",
+  "pagination": "pagination",
   "service": "serviceClass",
   "jpaMetamodelFiltering": false,
   "fluentMethods": true,

@@ -48,7 +48,7 @@
       "otherEntityName": "user",
       "otherEntityRelationshipName": "customerDetails",
       "relationshipName": "user",
-      "otherEntityField": "id",
+      "otherEntityField": "login",
       "ownerSide": true,
       "useJPADerivedIdentifier": true
     },
@@ -64,7 +64,7 @@
   "javadoc": "Additional details for users as we can't modify built-in user entity vis JDL",
   "entityTableName": "customer_details",
   "dto": "no",
-  "pagination": "pagination",
+  "pagination": "no",
   "service": "serviceClass",
   "jpaMetamodelFiltering": false,
   "fluentMethods": true,

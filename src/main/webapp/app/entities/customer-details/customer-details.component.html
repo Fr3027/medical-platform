@@ -21,15 +21,15 @@
     <div class="table-responsive" id="entities" *ngIf="customerDetails && customerDetails.length > 0">
         <table class="table table-striped" aria-describedby="page-heading">
             <thead>
-                <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
-                    <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="gender"><span jhiTranslate="demoApp.customerDetails.gender">Gender</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="phone"><span jhiTranslate="demoApp.customerDetails.phone">Phone</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="addressLine1"><span jhiTranslate="demoApp.customerDetails.addressLine1">Address Line 1</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="addressLine2"><span jhiTranslate="demoApp.customerDetails.addressLine2">Address Line 2</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="city"><span jhiTranslate="demoApp.customerDetails.city">City</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="country"><span jhiTranslate="demoApp.customerDetails.country">Country</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="user.id"><span jhiTranslate="demoApp.customerDetails.user">User</span> <fa-icon icon="sort"></fa-icon></th>
+                <tr>
+                    <th scope="col" ><span jhiTranslate="global.field.id">ID</span></th>
+                    <th scope="col" ><span jhiTranslate="demoApp.customerDetails.gender">Gender</span></th>
+                    <th scope="col" ><span jhiTranslate="demoApp.customerDetails.phone">Phone</span></th>
+                    <th scope="col" ><span jhiTranslate="demoApp.customerDetails.addressLine1">Address Line 1</span></th>
+                    <th scope="col" ><span jhiTranslate="demoApp.customerDetails.addressLine2">Address Line 2</span></th>
+                    <th scope="col" ><span jhiTranslate="demoApp.customerDetails.city">City</span></th>
+                    <th scope="col" ><span jhiTranslate="demoApp.customerDetails.country">Country</span></th>
+                    <th scope="col" ><span jhiTranslate="demoApp.customerDetails.user">User</span></th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -43,7 +43,7 @@
                     <td>{{ customerDetails.city }}</td>
                     <td>{{ customerDetails.country }}</td>
                     <td>
-                        {{ customerDetails.user?.id }}
+                        {{ customerDetails.user?.login }}
                     </td>
                     <td class="text-right">
                         <div class="btn-group">
@@ -71,15 +71,5 @@
                 </tr>
             </tbody>
         </table>
-    </div>
-
-    <div *ngIf="customerDetails && customerDetails.length > 0">
-        <div class="row justify-content-center">
-            <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
-        </div>
-
-        <div class="row justify-content-center">
-            <ngb-pagination [collectionSize]="totalItems" [(page)]="ngbPaginationPage" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
-        </div>
     </div>
 </div>

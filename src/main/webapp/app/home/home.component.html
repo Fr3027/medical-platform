@@ -1,10 +1,19 @@
-<div class="row">
-    <div class="col-md-3">
-        <span class="hipster img-fluid rounded"></span>
+<div>
+    <div class="row">
+        <div class="col-md-3" *ngFor="let i of [1,2,3,4]">
+            <div class="row">
+                <div class="col-md-12">
+                    <img src="https://img.alicdn.com/imgextra/i2/2928278102/O1CN01s07YI229ilaocyUet_!!2928278102-0-sm.jpg_430x430q90.jpg" alt="" style="width: 100%;height:100%;">
+                </div>
+                <div class="col-md-6" style="color: red;font-size: large;">¥30.00</div>
+                <div class="col-md-6" style="color: gray;font-size: small;display:flex;align-items: center;">阿里健康大药房</div>
+                <div class="col-md-12" style="font-size: small;">2盒装 999三九感冒灵颗粒冲剂咽痛头痛流鼻涕鼻塞药店感冒灵常备</div>
+            </div>
+        </div>
     </div>
-
-    <div class="col-md-9">
+    
         <h1 class="display-4" jhiTranslate="home.title">Welcome, Java Hipster!</h1>
+        <div *jhiHasAnyAuthority="'ROLE_MERCHANT'">This should appear.... when the VISITOR is NOT logged </div>
 
         <p class="lead" jhiTranslate="home.subtitle">This is your homepage</p>
 
@@ -40,5 +49,4 @@
         <p>
             <span jhiTranslate="home.like">If you like JHipster, don't forget to give us a star on</span> <a href="https://github.com/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer" jhiTranslate="home.github">GitHub</a>!
         </p>
-    </div>
 </div>
