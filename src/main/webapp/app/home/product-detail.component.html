@@ -1,0 +1,82 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="product">
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="demoApp.product.name">Name</span></dt>
+                <dd>
+                    <span>{{ product.name }}</span>
+                </dd>
+                <dt><span jhiTranslate="demoApp.product.description">Description</span></dt>
+                <dd>
+                    <span>{{ product.description }}</span>
+                </dd>
+                <dt><span jhiTranslate="demoApp.product.price">Price</span></dt>
+                <dd>
+                    <span>¥{{ product.price }}</span>
+                </dd>
+                <dt><span jhiTranslate="demoApp.product.brand">Brand</span></dt>
+                <dd>
+                    <span>{{ product.brand }}</span>
+                </dd>
+                <dt><span jhiTranslate="demoApp.product.approvalNumber">Approval Number</span></dt>
+                <dd>
+                    <span>{{ product.approvalNumber }}</span>
+                </dd>
+                <dt><span jhiTranslate="demoApp.product.instruction">Instruction</span></dt>
+                <dd>
+                    <span>{{ product.instruction }}</span>
+                </dd>
+                <dt><span jhiTranslate="demoApp.product.manufacturer">Manufacturer</span></dt>
+                <dd>
+                    <span>{{ product.manufacturer }}</span>
+                </dd>
+                <dt><span jhiTranslate="demoApp.product.type">Type</span></dt>
+                <dd>
+                    <span>{{ product.type }}</span>
+                </dd>
+                <dt><span jhiTranslate="demoApp.product.validPeriod">Valid Period</span></dt>
+                <dd>
+                    <span>{{ product.validPeriod }}</span>
+                </dd>
+                <dt><span jhiTranslate="demoApp.product.image">Image</span></dt>
+                <dd>
+                    <div *ngIf="product.image">
+                        <a (click)="openFile(product.imageContentType, product.image)">
+                            <img [src]="'data:' + product.imageContentType + ';base64,' + product.image" style="max-width: 100%;" alt="product image"/>
+                        </a>
+                        {{ product.imageContentType }}, {{ byteSize(product.image) }}
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="demoApp.product.user">User</span></dt>
+                <dd>
+                    {{ product.user?.login }}
+                </dd>
+                <dt><span jhiTranslate="demoApp.product.productCategory">Product Category</span></dt>
+                <dd>
+                    <div *ngIf="product.productCategory">
+                        <a [routerLink]="['/product-category', product.productCategory?.id, 'view']">{{ product.productCategory?.name }}</a>
+                    </div>
+                </dd>
+            </dl>
+            <div>
+                <label for="field_quantity">数量</label>
+                <input type="number" name="quantity" id="field_quantity" [(ngModel)]="quantity"/>
+            </div>
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    (click)="addToCart()"
+                    class="btn btn-danger">
+                <fa-icon icon="cart-plus"></fa-icon>&nbsp;<span>加入购物车</span>
+            </button>
+        </div>
+    </div>
+</div>

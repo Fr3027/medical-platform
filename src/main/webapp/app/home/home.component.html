@@ -1,4 +1,5 @@
 <div>
+    <jhi-alert></jhi-alert>
     <div [ngSwitch]="isAuthenticated()">
         <div class="alert alert-success" *ngSwitchCase="true">
             <span id="home-logged-message" *ngIf="account" jhiTranslate="home.logged.message"
@@ -15,7 +16,7 @@
     </div>
     <div class="row">
         <div class="col-md-3" style="padding-bottom: 10px;" *ngFor="let product of products;trackBy: trackId">
-            <div class="row">
+            <div class="row" (click)="navigateToDetail(product)">
                 <div class="col-md-12">
                     <!-- <img [src]="product.image" alt="" style="width: 100%;height:100%;">width: 100%;height:100%; -->
                     <img [src]="'data:' + product.imageContentType + ';base64,' + product.image" style="width: 100%;height:100%;" alt="product image"/>

@@ -92,7 +92,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     return item.id!;
   }
   navigateToDetail(product: IProduct): void {
-    this.router.navigate(['home/product', 1, 'view']);
+    this.router.navigate(['/home/product', product.id, 'view']);
   }
   protected onSuccess(data: IProduct[] | null, headers: HttpHeaders, page: number, navigate: boolean): void {
     this.totalItems = Number(headers.get('X-Total-Count'));
@@ -107,7 +107,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       });
     }
     this.products = data || [];
-    console.warn(this.products);
     this.ngbPaginationPage = this.page;
   }
   protected onError(): void {
