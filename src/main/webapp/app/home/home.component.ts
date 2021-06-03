@@ -27,6 +27,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   predicate!: string;
   ascending!: boolean;
   ngbPaginationPage = 1;
+  search = '';
 
   constructor(
     private accountService: AccountService,
@@ -43,6 +44,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         page: pageToLoad - 1,
         size: this.itemsPerPage,
         sort: this.sort(),
+        search: this.search,
       })
       .subscribe(
         (res: HttpResponse<IProduct[]>) => this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate),
@@ -53,7 +55,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.authSubscription = this.accountService.getAuthenticationState().subscribe(account => (this.account = account));
     this.handleNavigation();
   }
-  protected handleNavigation(): void {
+  handleNavigation(): void {
     combineLatest(this.activatedRoute.data, this.activatedRoute.queryParamMap, (data: Data, params: ParamMap) => {
       const page = params.get('page');
       const pageNumber = page !== null ? +page : 1;
@@ -66,6 +68,10 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.loadPage(pageNumber, true);
       }
     }).subscribe();
+  }
+  reSearch(): void {
+    // alert(this.search);
+    this.loadPage(1, true);
   }
   isAuthenticated(): boolean {
     return this.accountService.isAuthenticated();
@@ -98,7 +104,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.totalItems = Number(headers.get('X-Total-Count'));
     this.page = page;
     if (navigate) {
-      this.router.navigate(['/product'], {
+      this.router.navigate(['/'], {
         queryParams: {
           page: this.page,
           size: this.itemsPerPage,

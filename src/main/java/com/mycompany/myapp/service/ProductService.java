@@ -49,6 +49,11 @@ public class ProductService {
         log.debug("Request to get all Products");
         return productRepository.findAll(pageable);
     }
+    @Transactional(readOnly = true)
+    public Page<Product> findAllBySearch(Pageable pageable,String search) {
+        log.debug("Request to get all Products");
+        return productRepository.findByNameContaining(pageable,search);
+    }
 
 
     /**

@@ -11,7 +11,7 @@ import { PasswordResetInitComponent } from './password-reset/init/password-reset
 import { PasswordResetFinishComponent } from './password-reset/finish/password-reset-finish.component';
 import { SettingsComponent } from './settings/settings.component';
 import { accountState } from './account.route';
-
+import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 @NgModule({
   imports: [DemoSharedModule, RouterModule.forChild(accountState)],
   declarations: [
@@ -22,6 +22,7 @@ import { accountState } from './account.route';
     PasswordResetInitComponent,
     PasswordResetFinishComponent,
     SettingsComponent,
+    ShoppingCartComponent,
   ],
 })
 export class AccountModule {}

@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared/util/request-util';
 import { IShoppingCart } from 'app/shared/model/shopping-cart.model';
+import { ICartItem } from 'app/shared/model/cart-item.model';
 
 type EntityResponseType = HttpResponse<IShoppingCart>;
 type EntityArrayResponseType = HttpResponse<IShoppingCart[]>;
@@ -17,6 +18,10 @@ export class ShoppingCartService {
 
   create(shoppingCart: IShoppingCart): Observable<EntityResponseType> {
     return this.http.post<IShoppingCart>(this.resourceUrl, shoppingCart, { observe: 'response' });
+  }
+
+  checkout(cartItems: ICartItem[] | undefined): Observable<HttpResponse<{}>> {
+    return this.http.post<ICartItem>(SERVER_API_URL + 'api/checkout', cartItems, { observe: 'response' });
   }
 
   update(shoppingCart: IShoppingCart): Observable<EntityResponseType> {

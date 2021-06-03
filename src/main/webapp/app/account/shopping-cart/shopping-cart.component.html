@@ -1,0 +1,31 @@
+<h1>欢迎来到你的购物车！</h1>
+<div *ngIf="cartItems && cartItems.length > 0">
+    <div *ngFor="let cartItem of cartItems" style="padding: 10px;">
+        <div class="row">
+            <div class="col-md-1">
+                <img [src]="'data:' + cartItem.product!.imageContentType + ';base64,' + cartItem.product!.image" style="width: 100px;height:100px;padding:5px;" alt="product image"/>
+            </div>
+            <div class="col-md-3">
+                <div style="padding-top: 20px;">
+                    <span>
+                        {{cartItem.product!.name}}
+                    </span>
+                </div> 
+            </div>
+            <div class="col-md-1" style="padding-top: 20px;color: red;font-size: large;">¥{{cartItem.product!.price}}</div>
+            <div class="col-md-1" style="padding-top: 20px;">数量： {{cartItem.quantity}}</div>
+            <div *ngIf="cartItem.product&&cartItem.product.price&&cartItem.quantity" class="col-md-1" style="padding-top: 20px;color: red;font-size: large;">¥{{cartItem.product.price*cartItem.quantity}}</div>
+            <div class="col-md-3" style="padding-top: 20px;">选购时间： {{cartItem.placeDate | date:'yyyy/MM/dd-hh:mm'}}</div>
+            <div class="col-md-2">
+                <button class="btn btn-danger" style="margin-top: 15px;width: 100px;" (click)="removeItem(cartItem.id)">移除</button>
+            </div>
+        </div>
+        <!-- {{cartItem.id}} -->
+    </div>    
+    <div class="row">
+        <div class="col-md-9"></div>
+        <div class="col-md-3">
+            <span style="color: red;font-size: large;">合计：¥{{totalPrice}}</span><button class="btn btn-primary" style="margin-left: 10px;width: 150px;" (click)="checkout()">结算</button>
+        </div>
+    </div>
+</div>

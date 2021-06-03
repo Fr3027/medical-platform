@@ -2,28 +2,28 @@
   "demoApp": {
     "advisory": {
       "home": {
-        "title": "Advisories",
-        "createLabel": "创建新 Advisory",
-        "createOrEditLabel": "创建或编辑 Advisory",
-        "notFound": "No Advisories found"
+        "title": "健康咨询管理",
+        "createLabel": "创建新 健康咨询",
+        "createOrEditLabel": "创建或编辑 健康咨询",
+        "notFound": "暂无健康咨询"
       },
-      "created": "Advisory {{ param }} 创建成功",
-      "updated": "Advisory {{ param }} 更新成功",
-      "deleted": "Advisory {{ param }} 删除成功",
+      "created": "健康咨询 {{ param }} 创建成功",
+      "updated": "健康咨询 {{ param }} 更新成功",
+      "deleted": "健康咨询 {{ param }} 删除成功",
       "delete": {
-        "question": "你确定要删除 Advisory {{ id }} 吗？"
+        "question": "你确定要删除 健康咨询 {{ id }} 吗？"
       },
       "detail": {
-        "title": "Advisory"
+        "title": "健康咨询"
       },
-      "created": "Created",
-      "updated": "Updated",
-      "title": "Title",
-      "detail": "Detail",
-      "answer": "Answer",
-      "initiator": "Initiator",
-      "proposer": "Proposer",
-      "user": "User"
+      "created": "创建时间",
+      "updated": "更新时间",
+      "title": "标题",
+      "detail": "描述",
+      "answer": "回答",
+      "initiator": "创建者",
+      "proposer": "回答者",
+      "user": "用户"
     }
   }
 }

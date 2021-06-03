@@ -10,6 +10,7 @@ import { LoginModalService } from 'app/core/login/login-modal.service';
 import { LoginService } from 'app/core/login/login.service';
 import { ProfileService } from 'app/layouts/profiles/profile.service';
 import { Observable } from 'rxjs';
+import { faAddressBook } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'jhi-navbar',
@@ -23,6 +24,7 @@ export class NavbarComponent implements OnInit {
   swaggerEnabled?: boolean;
   version: string;
   account$?: Observable<Account | null>;
+  faAddressBook = faAddressBook;
 
   constructor(
     private loginService: LoginService,

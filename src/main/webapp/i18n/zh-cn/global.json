@@ -7,19 +7,21 @@
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "数据",
-        "product": "Product",
-        "productCategory": "Product Category",
-        "customerDetails": "Customer Details",
-        "shoppingCart": "Shopping Cart",
-        "productOrder": "Product Order",
-        "advisory": "Advisory",
-        "cartItem": "Cart Item",
+        "product": "商品管理",
+        "productCategory": "商品类别",
+        "customerDetails": "客户信息",
+        "shoppingCart": "购物车",
+        "productOrder": "订单管理",
+        "advisory": "健康咨询",
+        "cartItem": "购物车项",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {
         "main": "账号",
         "settings": "设置",
         "password": "密码",
+        "customer-details": "客户信息",
+        "shopping-cart": "购物车",
         "sessions": "会话",
         "login": "登录",
         "logout": "退出",
@@ -115,7 +117,7 @@
       "title": "确认删除"
     },
     "validation": {
-      "required": "本字段不能为空.",
+      "required": "本字段校验失败.",
       "minlength": "本字段最短长度为 {{min}} 个字符.",
       "maxlength": "本字段最大长度为 {{max}} 个字符.",
       "min": "本字段不能小于 {{min}}.",

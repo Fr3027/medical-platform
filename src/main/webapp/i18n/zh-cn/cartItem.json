@@ -2,24 +2,24 @@
   "demoApp": {
     "cartItem": {
       "home": {
-        "title": "Cart Items",
-        "createLabel": "创建新 Cart Item",
-        "createOrEditLabel": "创建或编辑 Cart Item",
-        "notFound": "No Cart Items found"
+        "title": "购物车项管理",
+        "createLabel": "创建新 购物车项",
+        "createOrEditLabel": "创建或编辑 购物车项",
+        "notFound": "暂无购物车项"
       },
-      "created": "Cart Item {{ param }} 创建成功",
-      "updated": "Cart Item {{ param }} 更新成功",
-      "deleted": "Cart Item {{ param }} 删除成功",
+      "created": "购物车项 {{ param }} 创建成功",
+      "updated": "购物车项 {{ param }} 更新成功",
+      "deleted": "购物车项 {{ param }} 删除成功",
       "delete": {
-        "question": "你确定要删除 Cart Item {{ id }} 吗？"
+        "question": "你确定要删除 购物车项 {{ id }} 吗？"
       },
       "detail": {
-        "title": "Cart Item"
+        "title": "购物车项"
       },
-      "quantity": "Quantity",
-      "placeDate": "Place Date",
-      "product": "Product",
-      "cart": "Cart"
+      "quantity": "数量",
+      "placeDate": "放置日期",
+      "product": "商品",
+      "cart": "购物车"
     }
   }
 }

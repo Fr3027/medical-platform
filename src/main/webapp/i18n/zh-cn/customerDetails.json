@@ -2,28 +2,28 @@
   "demoApp": {
     "customerDetails": {
       "home": {
-        "title": "Customer Details",
-        "createLabel": "创建新 Customer Details",
-        "createOrEditLabel": "创建或编辑 Customer Details",
-        "notFound": "No Customer Details found"
+        "title": "客户信息管理",
+        "createLabel": "创建新 客户信息",
+        "createOrEditLabel": "创建或编辑 客户信息",
+        "notFound": "暂无客户信息"
       },
-      "created": "Customer Details {{ param }} 创建成功",
-      "updated": "Customer Details {{ param }} 更新成功",
-      "deleted": "Customer Details {{ param }} 删除成功",
+      "created": "客户信息 {{ param }} 创建成功",
+      "updated": "客户信息 {{ param }} 更新成功",
+      "deleted": "客户信息 {{ param }} 删除成功",
       "delete": {
-        "question": "你确定要删除 Customer Details {{ id }} 吗？"
+        "question": "你确定要删除 客户信息 {{ id }} 吗？"
       },
       "detail": {
-        "title": "Customer Details"
+        "title": "客户信息"
       },
-      "gender": "Gender",
-      "phone": "Phone",
-      "addressLine1": "Address Line 1",
-      "addressLine2": "Address Line 2",
-      "city": "City",
-      "country": "Country",
-      "user": "User",
-      "shoppingCart": "Shopping Cart"
+      "gender": "性别",
+      "phone": "手机号",
+      "addressLine1": "地址1",
+      "addressLine2": "地址2",
+      "city": "城市",
+      "country": "国家",
+      "user": "用户",
+      "shoppingCart": "购物车"
     }
   }
 }

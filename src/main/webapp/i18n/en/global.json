@@ -1,6 +1,6 @@
 {
   "global": {
-    "title": "Demo",
+    "title": "Medical Health Service Platform",
     "browsehappy": "You are using an <strong>outdated</strong> browser. Please <a href=\"http://browsehappy.com/?locale=en\">upgrade your browser</a> to improve your experience.",
     "menu": {
       "home": "Home",
@@ -20,6 +20,8 @@
         "main": "Account",
         "settings": "Settings",
         "password": "Password",
+        "shopping-cart": "Shopping Cart",
+        "customer-details": "Customer Details",
         "sessions": "Sessions",
         "login": "Sign in",
         "logout": "Sign out",

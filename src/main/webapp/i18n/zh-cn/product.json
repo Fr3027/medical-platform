@@ -2,32 +2,32 @@
   "demoApp": {
     "product": {
       "home": {
-        "title": "Products",
-        "createLabel": "创建新 Product",
-        "createOrEditLabel": "创建或编辑 Product",
-        "notFound": "No Products found"
+        "title": "商品管理",
+        "createLabel": "创建新 商品",
+        "createOrEditLabel": "创建或编辑 商品",
+        "notFound": "暂无创新"
       },
-      "created": "Product {{ param }} 创建成功",
-      "updated": "Product {{ param }} 更新成功",
-      "deleted": "Product {{ param }} 删除成功",
+      "created": "商品 {{ param }} 创建成功",
+      "updated": "商品 {{ param }} 更新成功",
+      "deleted": "商品 {{ param }} 删除成功",
       "delete": {
-        "question": "你确定要删除 Product {{ id }} 吗？"
+        "question": "你确定要删除 商品 {{ id }} 吗？"
       },
       "detail": {
-        "title": "Product"
+        "title": "商品"
       },
-      "name": "Name",
-      "description": "Description",
-      "price": "Price",
-      "brand": "Brand",
-      "approvalNumber": "Approval Number",
-      "instruction": "Instruction",
-      "manufacturer": "Manufacturer",
-      "type": "Type",
-      "validPeriod": "Valid Period",
-      "image": "Image",
-      "user": "User",
-      "productCategory": "Product Category"
+      "name": "名称",
+      "description": "描述",
+      "price": "价格",
+      "brand": "品牌",
+      "approvalNumber": "国药准字",
+      "instruction": "用法",
+      "manufacturer": "生产企业",
+      "type": "类别",
+      "validPeriod": "有效期",
+      "image": "主图",
+      "user": "用户",
+      "productCategory": "商品类别"
     }
   }
 }

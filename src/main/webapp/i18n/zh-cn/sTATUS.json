@@ -2,9 +2,9 @@
   "demoApp": {
     "STATUS": {
       "null": "",
-      "NEW": "NEW",
-      "CANCEL": "CANCEL",
-      "COMPLETED": "COMPLETED"
+      "NEW": "未完成",
+      "CANCEL": "已取消",
+      "COMPLETED": "已完成"
     }
   }
 }

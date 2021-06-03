@@ -2,10 +2,11 @@ package com.mycompany.myapp.service;
 
 import com.mycompany.myapp.domain.ShoppingCart;
 import com.mycompany.myapp.repository.ShoppingCartRepository;
+import com.mycompany.myapp.repository.CartItemRepository;
 import com.mycompany.myapp.repository.CustomerDetailsRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +25,9 @@ public class ShoppingCartService {
     private final ShoppingCartRepository shoppingCartRepository;
 
     private final CustomerDetailsRepository customerDetailsRepository;
+
+    @Autowired
+    private CartItemRepository cartItemRepository;
 
     public ShoppingCartService(ShoppingCartRepository shoppingCartRepository, CustomerDetailsRepository customerDetailsRepository) {
         this.shoppingCartRepository = shoppingCartRepository;
@@ -75,5 +79,9 @@ public class ShoppingCartService {
     public void delete(Long id) {
         log.debug("Request to delete ShoppingCart : {}", id);
         shoppingCartRepository.deleteById(id);
+    }
+    public void clear(Long id){
+        log.debug("Request to clear ShoppingCart : {}", id);
+        cartItemRepository.deleteByCartId(id);
     }
 }
